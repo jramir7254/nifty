@@ -1,18 +1,6 @@
-'use client'
 import type { Value } from 'platejs';
 
-
-import {
-    usePlateEditor,
-} from 'platejs/react';
-
-
-import { Button } from '@/components/shadcn/button';
-
-
-import { ScrollArea } from '@/components/shadcn/scroll-area';
-import { EditorStatic } from '@/components/plate/nodes/editor-static';
-const initialValue: Value = [
+export const initialValue: Value = [
     {
         type: 'h2',
         children: [
@@ -58,38 +46,3 @@ const initialValue: Value = [
         type: 'code_block',
     },
 ];
-
-const test = "# heading"
-import { BaseEditorKit } from '@/components/plate/kits/editor-base-kit';
-
-export default function AssignmentStaticEditor() {
-    const editor = usePlateEditor({
-        plugins: BaseEditorKit,
-
-        value: initialValue
-        // value: (editor) => editor.getApi(MarkdownPlugin).markdown.deserialize(test)
-
-
-    });
-
-
-
-
-
-    return (
-        <div>
-            <ScrollArea className='h-[50vh] '>
-
-                <EditorStatic
-                    variant={'fullWidth'}
-                    className=' '
-                    editor={editor}
-                // value={editor.getApi(MarkdownPlugin).markdown.deserialize(response)} 
-                >
-
-                </EditorStatic>
-            </ScrollArea>
-
-        </div>
-    );
-}

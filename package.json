@@ -8,13 +8,12 @@
     "start": "next start",
     "lint": "eslint"
   },
-  "overrides": {
-    "@neondatabase/serverless": "^0.10.4"
-  },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.30",
+    "@ai-sdk/react": "^3.0.99",
     "@ariakit/react": "^0.4.21",
     "@emoji-mart/data": "^1.2.1",
-    "@google/generative-ai": "^0.24.1",
+    "@google/genai": "^1.42.0",
     "@maptiler/sdk": "^3.11.1",
     "@neondatabase/auth": "^0.2.0-beta.1",
     "@neondatabase/serverless": "^1.0.2",
@@ -44,7 +43,10 @@
     "@platejs/toggle": "^52.0.11",
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-toolbar": "^1.1.11",
+    "@tanstack/react-query": "^5.90.21",
+    "@tanstack/react-query-devtools": "^5.91.3",
     "@udecode/cn": "^52.0.11",
+    "ai": "^6.0.97",
     "axios": "^1.13.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -64,10 +66,13 @@
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
     "tailwind-merge": "^3.5.0",
-    "tailwind-scrollbar-hide": "^4.0.0"
+    "tailwind-scrollbar-hide": "^4.0.0",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@tanstack/eslint-plugin-query": "^5.91.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

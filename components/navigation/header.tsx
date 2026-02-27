@@ -32,8 +32,8 @@ export default function Header() {
                 <NavLink path='/' text='Home' />
                 <NavLink path='/auth/sign-in' text='Sign In' guest />
                 <NavLink path='/account' text='Account' auth />
-                <NavLink path='/globe' text='Globe' auth />
-                <NavLink path='/assignment' text='Assignment' auth />
+                <NavLink path='/geo' text='Globe' auth />
+                <NavLink path='/playground' text='Playground' auth />
 
 
 

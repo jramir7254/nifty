@@ -7,7 +7,8 @@ import { SidebarInset, SidebarProvider } from "@/components/shadcn/sidebar";
 import { ThemeProvider } from "@/context/theme-provider";
 import { NeonAuthUIProvider } from "@neondatabase/auth/react";
 import { authClient } from "@/lib/auth/client";
-import Link from "next/link";
+import { logger } from "@/lib/logger";
+import { Separator } from "@/components/shadcn/separator";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -29,17 +30,22 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+
+
+    logger.debug("[ENV]", process.env)
+
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
             >
                 <NeonAuthUIProvider
                     authClient={authClient}
+
                     emailOTP
                     emailVerification
                     social={{
-                        providers: ['google', 'github', 'vercel']
+                        providers: ['google', 'github', 'vercel',]
                     }}
                     redirectTo="/account"
                 >
@@ -50,7 +56,9 @@ export default function RootLayout({
                             <AppSidebar />
                             <SidebarInset>
                                 <Header />
-                                <main className="flex flex-1 max-w-screen flex-col gap-4 p-4 pt-0 overflow-hidden">
+                                <Separator />
+
+                                <main className="flex flex-1 max-w-screen flex-col gap-4 p-0 pt-0 overflow-x-hidden">
                                     {children}
                                 </main>
                             </SidebarInset>

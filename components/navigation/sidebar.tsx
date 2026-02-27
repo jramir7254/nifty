@@ -2,16 +2,7 @@
 
 import * as React from "react"
 import {
-    BookOpen,
-    Bot,
     Command,
-    Frame,
-    LifeBuoy,
-    Map,
-    PieChart,
-    Send,
-    Settings2,
-    SquareTerminal,
 } from "lucide-react"
 
 
@@ -27,14 +18,14 @@ import {
 } from "@/components/shadcn/sidebar"
 import { usePathname, } from 'next/navigation';
 
-import GlobeSidebar from "@/app/globe/_components/globe-sidebar";
+import GlobeSidebar from "@/app/geo/_components/globe-sidebar";
 import { logger } from "@/lib/logger";
 import AccountSidebar from "@/app/account/_components/account-sidebar";
 import Footer from "./footer";
 
 function Content({ pathname }: { pathname: string }) {
     // if (matchPath("/", pathname)) return <DashboardSidebar />;
-    if (pathname.startsWith('/globe')) return <GlobeSidebar />;
+    if (pathname.startsWith('/geo')) return <GlobeSidebar />;
     if (pathname.startsWith('/account')) return <AccountSidebar />;
     return <></>;
 }
@@ -48,7 +39,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 
     return (
-        <Sidebar variant="inset" {...props} >
+        <Sidebar variant="inset" {...props} className="">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>

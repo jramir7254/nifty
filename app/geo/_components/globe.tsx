@@ -3,29 +3,23 @@
 import * as maptilersdk from "@maptiler/sdk";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import React, { useState, useEffect, useRef } from "react";
-import {
-    Shuffle
-} from "lucide-react"
 
 const center = { lng: -157.9253, lat: 21.4732 };
 const zoom = 20;
 maptilersdk.config.apiKey = "WoHVoOaowll2UAl1a0g4";
-import { Button } from "@/components/shadcn/button";
 import { useTheme } from "@/context/theme-provider";
-
-const randomize = (arr: any[], num: number) => {
-    const shuffled = [...arr].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, num);
-};
+import { useGeoStore } from "../_lib/geo_store";
 
 
-const randomLocations = []
+
+
 
 const sourceId = "randomLocations";
 
 
 export default function Globe() {
     const { theme } = useTheme()
+    const randomLocations = useGeoStore((state) => state.randomSelectedLocations)
 
     const mapContainer = useRef<HTMLDivElement>(null);
     const map = useRef<maptilersdk.Map>(null);
@@ -134,13 +128,20 @@ export default function Globe() {
                     }
                 });
             }
+        } else {
+            if (map.current && map.current.getSource(sourceId)) {
+                map?.current?.getSource(sourceId)
+
+                console.log("Source data updated");
+                map.current.removeLayer(sourceId)
+            }
         }
-    }, [randomLocations]);
+    }
+        , [randomLocations]);
 
 
     return (
         <>
-            <Button className="absolute z-100" size={'icon'} > <Shuffle /></Button>
             <div ref={mapContainer} id="map" className="size-full" />
         </>
     )

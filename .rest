@@ -1,0 +1,10 @@
+
+POST https://ep-holy-bar-ak2fk68q.neonauth.c-3.us-west-2.aws.neon.tech/neondb/auth/sign-up/email
+Origin: "localhost"
+content-type: application/json
+
+{
+    "name": "Jesus Ramirez",
+    "email": "jrami904@epcc.edu",
+    "password": "Qpzm()56"
+}
