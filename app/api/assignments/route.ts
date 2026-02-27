@@ -1,6 +1,6 @@
 import { logger } from '@/lib/logger';
 import { auth } from '@/lib/auth/server';
-import { neon, Query } from "@neondatabase/serverless";
+import { neon } from "@neondatabase/serverless";
 
 const sql = neon(process.env.DATABASE_URL!);
 
