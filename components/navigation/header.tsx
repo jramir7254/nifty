@@ -3,9 +3,8 @@ import React from 'react'
 import { SidebarTrigger } from '../shadcn/sidebar'
 import { Separator } from '../shadcn/separator'
 import { Switch } from '../shadcn/switch'
-import { useTheme } from '@/context/theme-provider'
 import NavLink from './nav-link'
-
+import { useTheme } from 'next-themes'
 
 
 
@@ -28,15 +27,7 @@ export default function Header() {
                     orientation="vertical"
                     className="mr-2 data-[orientation=vertical]:h-4"
                 />
-
-                <NavLink path='/' text='Home' />
                 <NavLink path='/auth/sign-in' text='Sign In' guest />
-                <NavLink path='/account' text='Account' auth />
-                <NavLink path='/geo' text='Globe' auth />
-                <NavLink path='/playground' text='Playground' auth />
-
-
-
             </div>
             <div className="lg:ml-auto mr-5 lg:mr-10">
                 <Switch checked={isDark} onCheckedChange={changeTheme} />

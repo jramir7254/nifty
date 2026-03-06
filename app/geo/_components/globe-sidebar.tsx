@@ -30,7 +30,7 @@ export default function GlobeSidebar() {
             className='flex flex-col space-y-10 h-full mt-20  mb-5'
             onSubmit={(e) => {
                 e.preventDefault();
-                setRandom(randomize(zipGeoData[currentSearch as '79901'].features, 10))
+                setRandom(randomize(zipGeoData[currentSearch as '79901'].features, 1))
             }}
         >
             <div>

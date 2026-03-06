@@ -1,62 +1,69 @@
-'use client'
+'use client';
 
-
-import {
-    usePlateEditor,
-} from 'platejs/react';
-
+import * as React from 'react';
+import { Plate, usePlateEditor } from 'platejs/react';
+import { MarkdownPlugin } from '@platejs/markdown';
 
 import { ScrollArea } from '@/components/shadcn/scroll-area';
-import { EditorStatic } from '@/components/plate/nodes/editor-static';
 import { BaseEditorKit } from '@/components/plate/kits/editor-base-kit';
-import { MarkdownPlugin } from '@platejs/markdown';
-import { useDeferredValue, useMemo } from 'react';
-import { logger } from '@/lib/logger';
-import { Button } from '@/components/shadcn/button';
-import { useParamsStore } from '../_lib/params-store';
-import { client } from '@/lib/axios';
+import { ExportToolbarButton } from '@/components/plate/nodes/export-toolbar-button';
+import { Editor, EditorContainer } from '@/components/plate/nodes/editor';
+import { Toolbar } from '@/components/plate/nodes/toolbar';
+import { FixedToolbar } from '@/components/plate/nodes/fixed-toolbar';
 
 export default function AssignmentStaticEditor({
-    completion
+    completion,
+    isLoading
 }: {
-    completion: string
+    completion: string;
+    isLoading: boolean,
 }) {
-    const { additionalContext, courseLevel, programmingLanguage, topic, setParameter } = useParamsStore((state) => state)
-
     const editor = usePlateEditor({
         plugins: BaseEditorKit,
+        // optional: seed empty value if you want
+        // value: [{ type: 'p', children: [{ text: '' }] }],
     });
 
-    const deferredMarkdown = useDeferredValue(completion);
+    // Optional: smooth heavy updates a bit
+    const deferredMarkdown = React.useDeferredValue(completion);
 
-    // 3) Only deserialize when the deferred markdown changes
-    const value = useMemo(() => {
-        return editor.getApi(MarkdownPlugin).markdown.deserialize(deferredMarkdown);
+    // Avoid re-applying identical content
+    const lastAppliedRef = React.useRef<string>('');
+
+    React.useEffect(() => {
+        if (!editor) return;
+        if (deferredMarkdown === lastAppliedRef.current) return;
+
+        try {
+            const nextValue =
+                editor.getApi(MarkdownPlugin).markdown.deserialize(deferredMarkdown || '');
+
+            editor.tf.setValue(nextValue);
+
+            // readOnly preview usually doesn't need focus
+            // editor.tf.focus({ edge: 'endEditor' });
+
+            lastAppliedRef.current = deferredMarkdown;
+        } catch (error) {
+            console.error('Failed to deserialize streamed markdown', error);
+        }
     }, [editor, deferredMarkdown]);
 
-
-    const onClick = () => {
-        logger.debug("[EDITOR]", editor.children)
-        client.post('/api/assignments', {
-            additionalContext,
-            courseLevel,
-            topic,
-            programmingLanguage,
-            generatedAssignment: editor.children
-        })
-        setParameter('generatedAssignemnt', editor.children)
-    }
-
-
     return (
-        <ScrollArea className='h-[80vh] '>
-            <Button onClick={onClick}>Save</Button>
-            <EditorStatic
-                variant={'select'}
-                className='px-10 text-wrap max-w-[50vw]'
-                editor={editor}
-                value={value}
-            />
+        <ScrollArea className="h-[80vh]">
+            <Plate editor={editor}  >
+                <FixedToolbar>
+                    <ExportToolbarButton />
+                    <div>
+                        {isLoading && 'loading'}
+                    </div>
+                </FixedToolbar>
+
+                <EditorContainer className='overflow-hidden! max-w-300' variant={'demo'}>
+                    {/* Remove value prop here; Plate editor instance owns the value */}
+                    <Editor className='px-12! text-wrap! wrap-anywhere' readOnly placeholder="Type your amazing content here..." />
+                </EditorContainer>
+            </Plate>
         </ScrollArea>
     );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Nunito } from "next/font/google";
 import "./globals.css";
 import { AppSidebar } from "@/components/navigation/sidebar";
 import Header from "@/components/navigation/header";
@@ -19,6 +19,10 @@ const geistMono = Geist_Mono({
     variable: "--font-geist-mono",
     subsets: ["latin"],
 });
+const nunito = Nunito({
+    variable: "--font-nunito",
+    subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
     title: "Nifty Assignments",
@@ -32,32 +36,32 @@ export default function RootLayout({
 }>) {
 
 
-    logger.debug("[ENV]", process.env)
-
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
+                className={`${geistSans.variable} ${geistMono.variable} ${nunito.variable} antialiased overflow-x-hidden`}
             >
                 <NeonAuthUIProvider
                     authClient={authClient}
-
                     emailOTP
                     emailVerification
+                    credentials={{ confirmPassword: true, }}
                     social={{
                         providers: ['google', 'github', 'vercel',]
                     }}
                     redirectTo="/account"
                 >
-
-
-                    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
                         <SidebarProvider>
                             <AppSidebar />
                             <SidebarInset>
                                 <Header />
                                 <Separator />
-
                                 <main className="flex flex-1 max-w-screen flex-col gap-4 p-0 pt-0 overflow-x-hidden">
                                     {children}
                                 </main>

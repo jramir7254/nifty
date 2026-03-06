@@ -25,17 +25,13 @@ export default function LogoutModal({ children }: { children: React.ReactNode })
                 {children}
             </AlertDialogTrigger>
             <AlertDialogContent
-
                 size="sm">
                 <AlertDialogHeader >
                     <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
                         <LogOut />
                     </AlertDialogMedia>
                     <AlertDialogTitle>Are you sure you want to logout?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        This will permanently delete this chat conversation. View{" "}
-                        <a href="#">Settings</a> delete any memories saved during this chat.
-                    </AlertDialogDescription>
+                    <AlertDialogDescription />
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>

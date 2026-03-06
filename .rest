@@ -8,3 +8,6 @@ content-type: application/json
     "email": "jrami904@epcc.edu",
     "password": "Qpzm()56"
 }
+
+###
+GET  https://api.geoapify.com/v2/places?categories=commercial&filter=place:51227a6bc335985ac0598d30d56477c83f40f00101f901ffbc010000000000c0020792030f37393932352b75732b706172656e74&limit=50&apiKey=89459d6cc6a847e3955249115e548dfc

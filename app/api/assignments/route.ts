@@ -17,7 +17,6 @@ export async function POST(req: Request): Promise<Response> {
         return Response.json({ error: 'Unauthenticated' }, { status: 401 });
     }
 
-    await new Query()
 
     logger.debug("[SESSION]", { session })
 

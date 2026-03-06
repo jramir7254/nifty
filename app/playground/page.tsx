@@ -12,10 +12,13 @@ import { Textarea } from '@/components/shadcn/textarea';
 import { useParamsStore } from './_lib/params-store';
 import { type UIMessage } from 'ai';
 import { Separator } from '@/components/shadcn/separator';
+import { useGeoStore } from '../geo/_lib/geo_store';
+import EditorHeader from './_components/editor-header';
 
 
 export default function AssignmentPage() {
     const { additionalContext, courseLevel, programmingLanguage, topic, setParameter } = useParamsStore((state) => state)
+    const randomLocations = useGeoStore((state) => state.randomSelectedLocations)
 
 
     const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
@@ -24,9 +27,11 @@ export default function AssignmentPage() {
             additionalContext,
             courseLevel,
             programmingLanguage,
-            topic
+            topic,
+            randomLocations
         },
-        experimental_throttle: 500
+
+        experimental_throttle: 800
     });
 
     // const handleSubmit = (e: React.FormEvent) => {
@@ -53,7 +58,8 @@ export default function AssignmentPage() {
             </div>
             <Separator orientation='vertical' />
             <div className="flex-1 max-w-2/3 ">
-                <AssignmentStaticEditor completion={completion} />
+                {/* <EditorHeader /> */}
+                <AssignmentStaticEditor isLoading={isLoading} completion={completion} />
             </div>
         </div>
     )

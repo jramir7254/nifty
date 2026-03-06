@@ -21,9 +21,11 @@ export default function ShuffleButton() {
 
 
     return (
-        <Button disabled={!randomLocations.length} onClick={() => setRandom(randomize(zipGeoData[currentSearch as '79901'].features, 10))
+        <Button disabled={!randomLocations.length} onClick={() => setRandom(randomize(zipGeoData[currentSearch as '79901']?.features, 1))
         } size={'icon'}>
             <Shuffle />
         </Button>
     )
 }
+
+

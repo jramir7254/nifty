@@ -18,6 +18,7 @@ const generatePrompt = (params) => {
         Topic: ${params?.topic}
         Programming Language: ${params?.programmingLanguage}
         Additional Context: ${params?.additionalContext}
+        Local Context: ${JSON.stringify(params.randomLocations)}
     `
 }
 
@@ -28,6 +29,8 @@ engaging, and effective coursework for computer science courses.
 Based on parameters such as course level, topic, etc., along with 
 other user data such as interests, learning style, and geographical data, 
 you will help develop an assignment tailored to those parameters.
+
+Also customize assignments based on local context so that they feel more personal and engaging
 
 ONLY output the assignment as markdown.
 `

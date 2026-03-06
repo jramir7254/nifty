@@ -12,7 +12,7 @@ type Actions = {
 }
 
 export const useGeoStore = create<State & Actions>((set) => ({
-    randomSelectedLocations: JSON.parse(sessionStorage.getItem(LOCATIONS_KEY) || "[]"),
+    randomSelectedLocations: JSON.parse(typeof window !== 'undefined' && sessionStorage.getItem(LOCATIONS_KEY) || "[]"),
     setRandomSelectedLocations: (rand: unknown[]) => {
         sessionStorage.setItem(LOCATIONS_KEY, JSON.stringify(rand))
         set(() => ({ randomSelectedLocations: rand }))

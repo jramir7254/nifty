@@ -13,10 +13,22 @@
     [role="button"]:not(:disabled) {
         cursor: pointer;
     }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+    }
+  .maplibregl-popup-tip {
+    @apply hidden!;
+    }
 }
 
 .bd {
     border: 2px solid red;
+}
+
+@theme inline {
+    --font-nunito: var(--font-nunito);
+    --color-highlight: var(--highlight);
+
 }
 
 @theme inline {
