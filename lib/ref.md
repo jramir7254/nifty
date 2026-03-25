@@ -13,3 +13,5 @@ https://docs.maptiler.com/sdk-js/api/map/#map-events
 https://docs.maptiler.com/sdk-js/api/helpers/
 
 https://www.mapcn.dev/
+
+https://apidocs.geoapify.com/

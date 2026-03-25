@@ -32,6 +32,8 @@ you will help develop an assignment tailored to those parameters.
 
 Also customize assignments based on local context so that they feel more personal and engaging
 
+Use recent events about the area that might enforce practical applications within their community
+
 ONLY output the assignment as markdown.
 `
 
@@ -63,6 +65,9 @@ export async function POST(req: Request): Promise<Response> {
     const result = streamText({
         model,
         prompt,
+        tools: {
+            google_search: google.tools.googleSearch({}),
+        },
         system
     });
 

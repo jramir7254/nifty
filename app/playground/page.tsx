@@ -14,6 +14,8 @@ import { type UIMessage } from 'ai';
 import { Separator } from '@/components/shadcn/separator';
 import { useGeoStore } from '../geo/_lib/geo_store';
 import EditorHeader from './_components/editor-header';
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 
 export default function AssignmentPage() {
@@ -57,10 +59,11 @@ export default function AssignmentPage() {
                 <Textarea value={additionalContext} onChange={(e) => setParameter('additionalContext', e.target.value)} />
             </div>
             <Separator orientation='vertical' />
-            <div className="flex-1 max-w-2/3 ">
+            <article className="flex-1 max-w-2/3 ">
                 {/* <EditorHeader /> */}
                 <AssignmentStaticEditor isLoading={isLoading} completion={completion} />
-            </div>
+
+            </article>
         </div>
     )
 }
