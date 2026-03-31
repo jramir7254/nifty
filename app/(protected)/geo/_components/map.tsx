@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState, useId, useRef, useCallback } from "react";
-import { Map, MapPopup, useMap } from "@/components/ui/tiler";
+// import { Map, MapPopup, useMap } from "@/components/ui/tiler";
+import { Map, MapPopup, useMap } from "@/components/ui/map";
 import { useGeoStore } from "../_lib/geo_store";
 
 

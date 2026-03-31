@@ -15,13 +15,14 @@ const randomize = (arr: any[], num: number) => {
 
 export default function ShuffleButton() {
     const setRandom = useGeoStore((state) => state.setRandomSelectedLocations)
+    const numLocs = useGeoStore((state) => state.numLocations)
     const randomLocations = useGeoStore((state) => state.randomSelectedLocations)
 
     const { currentSearch } = useSearch('zipcode')
 
 
     return (
-        <Button disabled={!randomLocations.length} onClick={() => setRandom(randomize(zipGeoData[currentSearch as '79901']?.features, 1))
+        <Button disabled={!randomLocations.length} onClick={() => setRandom(randomize(zipGeoData[currentSearch as '79901']?.features, numLocs))
         } size={'icon'}>
             <Shuffle />
         </Button>

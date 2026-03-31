@@ -30,6 +30,7 @@ export function ConfigPanel() {
     const { currentSearch } = useSearch('zipcode')
 
     const setRandom = useGeoStore((state) => state.setRandomSelectedLocations)
+    const { numLocations, setNumLocations } = useGeoStore((state) => state)
 
     return (
         <Collapsible>
@@ -53,14 +54,14 @@ export function ConfigPanel() {
                             className='flex space-y-10'
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                setRandom(randomize(zipGeoData[currentSearch as '79901'].features, 1))
+                                setRandom(randomize(zipGeoData[currentSearch as '79901'].features, numLocations))
                             }}
                         >
                             <div>
                                 <ZipSelect />
                             </div>
                             <div>
-                                <Input type='number' min={1} max={10} value={5} onChange={(e) => { }} placeholder='Number of locations' required />
+                                <Input type='number' min={1} max={10} value={numLocations} onChange={(e) => { setNumLocations(e) }} placeholder='Number of locations' required />
                             </div>
                             <div className=''>
                                 <Button className='w-full bg-blue-800 text-white hover:bg-blue-900 ' type='submit'>Submit</Button>

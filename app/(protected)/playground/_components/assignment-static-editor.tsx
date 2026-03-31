@@ -10,6 +10,8 @@ import { ExportToolbarButton } from '@/components/plate/nodes/export-toolbar-but
 import { Editor, EditorContainer } from '@/components/plate/nodes/editor';
 import { Toolbar } from '@/components/plate/nodes/toolbar';
 import { FixedToolbar } from '@/components/plate/nodes/fixed-toolbar';
+import { useParamsStore } from '../_lib/params-store';
+import { Button } from '@/components/shadcn/button';
 
 export default function AssignmentStaticEditor({
     completion,
@@ -23,6 +25,7 @@ export default function AssignmentStaticEditor({
         // optional: seed empty value if you want
         // value: [{ type: 'p', children: [{ text: '' }] }],
     });
+    const { setParameter } = useParamsStore((state) => state)
 
     // Optional: smooth heavy updates a bit
     const deferredMarkdown = React.useDeferredValue(completion);
@@ -30,15 +33,22 @@ export default function AssignmentStaticEditor({
     // Avoid re-applying identical content
     const lastAppliedRef = React.useRef<string>('');
 
+
+
     React.useEffect(() => {
         if (!editor) return;
+
         if (deferredMarkdown === lastAppliedRef.current) return;
+
+
 
         try {
             const nextValue =
                 editor.getApi(MarkdownPlugin).markdown.deserialize(deferredMarkdown || '');
 
             editor.tf.setValue(nextValue);
+
+
 
             // readOnly preview usually doesn't need focus
             // editor.tf.focus({ edge: 'endEditor' });
@@ -47,13 +57,14 @@ export default function AssignmentStaticEditor({
         } catch (error) {
             console.error('Failed to deserialize streamed markdown', error);
         }
-    }, [editor, deferredMarkdown]);
+    }, [editor, deferredMarkdown, isLoading, completion]);
 
     return (
         <ScrollArea className="h-[80vh]">
             <Plate editor={editor}  >
                 <FixedToolbar>
                     <ExportToolbarButton />
+                    <Button onClick={() => setParameter('generatedAssignemnt', editor.children)}>Load</Button>
                     <div>
                         {isLoading && 'loading'}
                     </div>

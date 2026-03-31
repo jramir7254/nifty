@@ -10,6 +10,7 @@ import {
     Settings,
     Shield,
     CircleUserRound,
+    File,
     type LucideIcon,
     Sparkles,
     WandSparkles,
@@ -35,20 +36,13 @@ import {
 } from "@/components/shadcn/sidebar"
 import { usePathname, } from 'next/navigation';
 
-import GlobeSidebar from "@/app/geo/_components/globe-sidebar";
 import { logger } from "@/lib/logger";
-import AccountSidebar from "@/app/account/_components/account-sidebar";
 import Footer from "./footer";
 import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "../shadcn/collapsible";
 import Link from "next/link";
 import { authClient } from "@/lib/auth/client";
 
-function Content({ pathname }: { pathname: string }) {
-    // if (matchPath("/", pathname)) return <DashboardSidebar />;
-    if (pathname.startsWith('/geo')) return <GlobeSidebar />;
-    // if (pathname.startsWith('/account')) return <AccountSidebar />;
-    return <></>;
-}
+
 
 type Link = {
     name: string,
@@ -60,12 +54,7 @@ type Link = {
 
 
 const links: Link[] = [
-    {
-        name: "Home",
-        icon: Home,
-        link: "/",
-        requireAuth: false,
-    },
+
     {
         name: "Account",
 
@@ -89,6 +78,12 @@ const links: Link[] = [
         name: "Playground",
         icon: WandSparkles,
         link: "/playground",
+        requireAuth: true,
+    },
+    {
+        name: "Assignments",
+        icon: File,
+        link: "/assignments",
         requireAuth: true,
     },
 ]
@@ -116,7 +111,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <a href="#">
+                            <Link href="/">
                                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                                     <Command className="size-4" />
                                 </div>
@@ -124,14 +119,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                     <span className="truncate font-medium">Nifty</span>
                                     <span className="truncate text-xs">Assignment Generator</span>
                                 </div>
-                            </a>
+                            </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent className="font-nunito">
                 <SidebarGroup >
-                    <SidebarGroupContent>
+                    <SidebarGroupContent className="space-y-2">
                         {links.map(link => link.requireAuth && !isAuthed ? null : (
                             // <SidebarGroup key={link.name}>
                             //     <SidebarGroupContent>
@@ -177,11 +172,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         ))}
                     </SidebarGroupContent>
                 </SidebarGroup>
-                {/* <SidebarGroup>
-                    <SidebarGroupContent>
-                        <Content pathname={pathname} />
-                    </SidebarGroupContent>
-                </SidebarGroup> */}
+
             </SidebarContent>
             <SidebarFooter>
                 <Footer />

@@ -2,7 +2,8 @@ import ClearButton from "./_components/clear-button";
 import ShuffleButton from "./_components/shuffle-button";
 // import { MapControls } from "@/components/ui/map";
 import Globe from "@/archive/globe";
-import { Map, MapControls } from "@/components/ui/tiler";
+// import { Map, MapControls } from "@/components/ui/tiler";
+import { Map, MapControls } from "@/components/ui/map";
 import { MarkersLayer } from "./_components/map";
 
 import {
@@ -19,7 +20,8 @@ export default function GlobePage() {
                 <ConfigPanel />
             </div>
             <Map
-                projection='globe'
+                projection={{ type: 'globe' }}
+
                 zoom={2}
                 minZoom={2}
                 styles={{

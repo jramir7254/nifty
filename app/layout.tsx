@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Nunito } from "next/font/google";
 import "./globals.css";
-import { AppSidebar } from "@/components/navigation/sidebar";
-import Header from "@/components/navigation/header";
-import { SidebarInset, SidebarProvider } from "@/components/shadcn/sidebar";
+
 import { ThemeProvider } from "@/context/theme-provider";
 import { NeonAuthUIProvider } from "@neondatabase/auth/react";
 import { authClient } from "@/lib/auth/client";
@@ -57,16 +55,12 @@ export default function RootLayout({
                         enableSystem
                         disableTransitionOnChange
                     >
-                        <SidebarProvider>
-                            <AppSidebar />
-                            <SidebarInset>
-                                <Header />
-                                <Separator />
-                                <main className="flex flex-1 max-w-screen flex-col gap-4 p-0 pt-0 overflow-x-hidden">
-                                    {children}
-                                </main>
-                            </SidebarInset>
-                        </SidebarProvider>
+                        
+
+                        <main className="flex flex-1 max-w-screen flex-col gap-4 p-0 pt-0 overflow-x-hidden">
+                            {children}
+                        </main>
+
                     </ThemeProvider>
                 </NeonAuthUIProvider>
             </body>
