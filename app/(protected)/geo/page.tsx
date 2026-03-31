@@ -1,16 +1,9 @@
-import ClearButton from "./_components/clear-button";
-import ShuffleButton from "./_components/shuffle-button";
-// import { MapControls } from "@/components/ui/map";
+
 import Globe from "@/archive/globe";
 // import { Map, MapControls } from "@/components/ui/tiler";
 import { Map, MapControls } from "@/components/ui/map";
 import { MarkersLayer } from "./_components/map";
 
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from "@/components/shadcn/collapsible"
 import { ConfigPanel } from "./_components";
 
 export default function GlobePage() {
