@@ -55,7 +55,7 @@ export default function RootLayout({
                         enableSystem
                         disableTransitionOnChange
                     >
-                        
+
 
                         <main className="flex flex-1 max-w-screen flex-col gap-4 p-0 pt-0 overflow-x-hidden">
                             {children}

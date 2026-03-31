@@ -1,8 +1,13 @@
-import React from 'react'
 import zipGeoData from "../_lib/zipcodes.json"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/shadcn/select'
 import { useSearch } from '@/hooks/use-search';
-export default function ZipSelect() {
+import { cn } from '@/lib/utils';
+
+export default function ZipSelect({
+    className,
+}: {
+    className?: string
+}) {
     const { currentSearch, handleSearchChange } = useSearch('zipcode')
 
 
@@ -13,8 +18,8 @@ export default function ZipSelect() {
             value={currentSearch || undefined}
             onValueChange={handleSearchChange}
         >
-            <SelectTrigger className="w-45">
-                <SelectValue placeholder="Zip Code" />
+            <SelectTrigger className={cn("w-full", className)}>
+                <SelectValue placeholder="Select ZIP code" />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>

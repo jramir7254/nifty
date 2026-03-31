@@ -3,6 +3,7 @@
 import { authClient } from "@/lib/auth/client";
 import { Button } from "@/components/shadcn/button";
 import Link from "next/link";
+import ThemeSwitcher from "@/components/navigation/theme-switcher";
 
 
 export default function PublicLayout({
@@ -18,7 +19,7 @@ export default function PublicLayout({
     return (
         <div className="overflow-hidden h-screen">
             <header className="sticky flex items-center justify-end px-10 top-0 h-16 bg-background z-10 border-b">
-                <nav className="flex gap-5">
+                <nav className="flex gap-2">
                     <Link href={'/'}>
                         <Button variant={'link'}>
                             Home
@@ -49,6 +50,7 @@ export default function PublicLayout({
                             </Link>
                         </>
                     )}
+                    <ThemeSwitcher />
                 </nav>
             </header>
 

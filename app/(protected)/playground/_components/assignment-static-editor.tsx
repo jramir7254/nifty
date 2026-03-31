@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { FileTextIcon, LoaderCircleIcon } from 'lucide-react';
 import { Plate, usePlateEditor } from 'platejs/react';
 import { MarkdownPlugin } from '@platejs/markdown';
 
@@ -8,10 +9,8 @@ import { ScrollArea } from '@/components/shadcn/scroll-area';
 import { BaseEditorKit } from '@/components/plate/kits/editor-base-kit';
 import { ExportToolbarButton } from '@/components/plate/nodes/export-toolbar-button';
 import { Editor, EditorContainer } from '@/components/plate/nodes/editor';
-import { Toolbar } from '@/components/plate/nodes/toolbar';
 import { FixedToolbar } from '@/components/plate/nodes/fixed-toolbar';
 import { useParamsStore } from '../_lib/params-store';
-import { Button } from '@/components/shadcn/button';
 
 export default function AssignmentStaticEditor({
     completion,
@@ -47,6 +46,7 @@ export default function AssignmentStaticEditor({
                 editor.getApi(MarkdownPlugin).markdown.deserialize(deferredMarkdown || '');
 
             editor.tf.setValue(nextValue);
+            setParameter('generatedAssignemnt', nextValue as unknown[]);
 
 
 
@@ -57,22 +57,43 @@ export default function AssignmentStaticEditor({
         } catch (error) {
             console.error('Failed to deserialize streamed markdown', error);
         }
-    }, [editor, deferredMarkdown, isLoading, completion]);
+    }, [completion, deferredMarkdown, editor, isLoading, setParameter]);
+
+    const hasContent = editor.children.length > 0;
 
     return (
-        <ScrollArea className="h-[80vh]">
-            <Plate editor={editor}  >
-                <FixedToolbar>
+        <ScrollArea className="h-[68vh] min-h-[34rem]">
+            <Plate
+                editor={editor}
+                onChange={({ value }) => {
+                    setParameter('generatedAssignemnt', value as unknown[]);
+                }}
+            >
+                <FixedToolbar className="gap-3 px-2">
                     <ExportToolbarButton />
-                    <Button onClick={() => setParameter('generatedAssignemnt', editor.children)}>Load</Button>
-                    <div>
-                        {isLoading && 'loading'}
+                    <div className="text-muted-foreground ml-auto flex items-center gap-2 pr-1 text-sm">
+                        {isLoading ? (
+                            <>
+                                <LoaderCircleIcon className="size-4 animate-spin" />
+                                <span>Streaming into preview</span>
+                            </>
+                        ) : hasContent ? (
+                            <>
+                                <FileTextIcon className="size-4" />
+                                <span>Draft synced for saving</span>
+                            </>
+                        ) : (
+                            <span>Generated content will appear here.</span>
+                        )}
                     </div>
                 </FixedToolbar>
 
-                <EditorContainer className='overflow-hidden! max-w-300' variant={'demo'}>
-                    {/* Remove value prop here; Plate editor instance owns the value */}
-                    <Editor className='px-12! text-wrap! wrap-anywhere' readOnly placeholder="Type your amazing content here..." />
+                <EditorContainer className="max-w-none overflow-hidden" variant="demo">
+                    <Editor
+                        className="wrap-anywhere text-wrap"
+                        placeholder="Generated assignment content will appear here."
+                        readOnly
+                    />
                 </EditorContainer>
             </Plate>
         </ScrollArea>

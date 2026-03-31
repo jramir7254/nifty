@@ -4,7 +4,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@neondatabase/auth/ui/tailwind";
-@plugin '@tailwindcss/typography';
+/* @plugin '@tailwindcss/typography'; */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -15,19 +15,7 @@
         cursor: pointer;
     }
 
-    /* .maplibregl-popup-content {
-        @apply bg-transparent ! shadow-none ! p-0 ! rounded-none !;
-    }
 
-    .maplibregl-popup-tip {
-        @apply hidden !;
-    } */
-  .maplibregl-popup-content {
-    @apply bg-transparent! shadow-none! p-0! rounded-none!;
-    }
-  .maplibregl-popup-tip {
-    @apply hidden!;
-    }
 }
 
 .bd {

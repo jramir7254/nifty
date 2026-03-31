@@ -4,20 +4,12 @@ import { SidebarTrigger } from '../shadcn/sidebar'
 import { Separator } from '../shadcn/separator'
 import { Switch } from '../shadcn/switch'
 import NavLink from './nav-link'
-import { useTheme } from 'next-themes'
+import ThemeSwitcher from './theme-switcher'
 
 
 
 export default function Header() {
-    const { setTheme, theme } = useTheme()
 
-
-
-    const isDark = theme === 'dark'
-
-    const changeTheme = () => {
-        theme === 'dark' ? setTheme('light') : setTheme('dark')
-    }
 
     return (
         <header className="flex h-16 shrink-0  items-center gap-2">
@@ -30,7 +22,7 @@ export default function Header() {
                 <NavLink path='/auth/sign-in' text='Sign In' guest />
             </div>
             <div className="lg:ml-auto mr-5 lg:mr-10">
-                <Switch checked={isDark} onCheckedChange={changeTheme} />
+                <ThemeSwitcher />
             </div>
         </header>
     )

@@ -1,4 +1,3 @@
-import React from 'react'
 import {
     Select,
     SelectContent,
@@ -7,29 +6,40 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/shadcn/select"
+import { cn } from '@/lib/utils'
 import { useParamsStore } from '../_lib/params-store'
 
-const langauges = [
+const languages = [
     'Java',
     'Python',
     'C++',
-    'Javascript'
+    'JavaScript',
 ]
 
-export default function LanguageSelect() {
+export default function LanguageSelect({
+    className,
+    id,
+}: {
+    className?: string
+    id?: string
+}) {
     const { programmingLanguage, setParameter } = useParamsStore((state) => state)
 
     return (
         <Select
-            value={programmingLanguage}
+            value={programmingLanguage || undefined}
             onValueChange={(e) => setParameter('programmingLanguage', e)}
         >
-            <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Language" />
+            <SelectTrigger className={cn('w-full', className)} id={id}>
+                <SelectValue placeholder="Select a language" />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    {langauges.map(lang => <SelectItem key={lang} value={lang}>{lang}</SelectItem>)}
+                    {languages.map((language) => (
+                        <SelectItem key={language} value={language}>
+                            {language}
+                        </SelectItem>
+                    ))}
                 </SelectGroup>
             </SelectContent>
         </Select>
