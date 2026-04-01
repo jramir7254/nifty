@@ -22,7 +22,6 @@ import {
 } from '@/components/shadcn/card'
 import {
     Collapsible,
-    CollapsibleContent,
     CollapsibleTrigger,
 } from '@/components/shadcn/collapsible'
 import {
@@ -78,33 +77,32 @@ export function ConfigPanel() {
     }
 
     return (
-        <Collapsible className="w-[min(92vw,24rem)]" open={open} onOpenChange={setOpen}>
-            <ScrollArea className="h-[70vh]">
-
-                <Card className="border-border/70 bg-background/85 shadow-xl backdrop-blur-xl">
-                    <CardHeader className="gap-3">
-                        <div className="flex items-start gap-3">
-                            <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                                <Settings2 className="size-5" />
+        <Collapsible className={open ? 'w-[min(92vw,24rem)]' : 'w-auto'} open={open} onOpenChange={setOpen}>
+            {open ? (
+                <ScrollArea className="h-[70vh]">
+                    <Card className="border-border/70 bg-background/85 shadow-xl backdrop-blur-xl">
+                        <CardHeader className="gap-3">
+                            <div className="flex items-start gap-3">
+                                <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                                    <Settings2 className="size-5" />
+                                </div>
+                                <div className="flex-1">
+                                    <CardTitle>Globe Settings</CardTitle>
+                                    <CardDescription className="mt-1 leading-6">
+                                        Control the active ZIP sample and review what is currently being
+                                        rendered on the globe.
+                                    </CardDescription>
+                                </div>
                             </div>
-                            <div className="flex-1">
-                                <CardTitle>Globe Settings</CardTitle>
-                                <CardDescription className="mt-1 leading-6">
-                                    Control the active ZIP sample and review what is currently being
-                                    rendered on the globe.
-                                </CardDescription>
-                            </div>
-                        </div>
-                        <CardAction>
-                            <CollapsibleTrigger asChild>
-                                <Button size="sm" variant="outline">
-                                    {open ? 'Collapse' : 'Expand'}
-                                </Button>
-                            </CollapsibleTrigger>
-                        </CardAction>
-                    </CardHeader>
+                            <CardAction>
+                                <CollapsibleTrigger asChild>
+                                    <Button size="sm" variant="outline">
+                                        Collapse
+                                    </Button>
+                                </CollapsibleTrigger>
+                            </CardAction>
+                        </CardHeader>
 
-                    <CollapsibleContent>
                         <CardContent className="flex flex-col gap-6">
                             <div className="grid grid-cols-3 gap-2">
                                 <div className="rounded-xl border border-border/70 bg-muted/25 p-3">
@@ -211,10 +209,7 @@ export function ConfigPanel() {
                                     <p className="text-sm font-medium">Current globe snapshot</p>
                                 </div>
                                 <div className="grid gap-2">
-                                    <div className="flex items-center justify-between rounded-xl border border-border/70 bg-muted/20 px-3 py-2">
-                                        <span className="text-sm text-muted-foreground">Projection</span>
-                                        <span className="text-sm font-medium">Globe</span>
-                                    </div>
+
                                     <div className="flex items-center justify-between rounded-xl border border-border/70 bg-muted/20 px-3 py-2">
                                         <span className="text-sm text-muted-foreground">Requested markers</span>
                                         <span className="text-sm font-medium">{requestedCount}</span>
@@ -259,10 +254,20 @@ export function ConfigPanel() {
                                 </p>
                             )}
                         </CardFooter>
-                    </CollapsibleContent>
-                </Card>
-            </ScrollArea>
-
+                    </Card>
+                </ScrollArea>
+            ) : (
+                <CollapsibleTrigger asChild>
+                    <Button
+                        aria-label="Open globe settings"
+                        className="rounded-2xl border border-border/70 bg-background/85 shadow-xl backdrop-blur-xl"
+                        size="icon"
+                        variant="outline"
+                    >
+                        <Settings2 />
+                    </Button>
+                </CollapsibleTrigger>
+            )}
         </Collapsible>
     )
 }

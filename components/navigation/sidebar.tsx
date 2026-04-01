@@ -1,23 +1,21 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
+
 import {
-    ChevronRight,
-    Command,
+    File,
     Globe2,
-    Home,
-    Pencil,
+    LayoutDashboard,
     Settings,
     Shield,
-    CircleUserRound,
-    File,
-    type LucideIcon,
     Sparkles,
     WandSparkles,
-    LayoutDashboard
+    type LucideIcon,
 } from "lucide-react"
+import { usePathname } from "next/navigation"
 
-
+import { authClient } from "@/lib/auth/client"
 import {
     Sidebar,
     SidebarContent,
@@ -29,154 +27,155 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-    SidebarMenuSub,
-    SidebarMenuSubButton,
-    SidebarMenuSubItem,
+    SidebarRail,
     SidebarSeparator,
 } from "@/components/shadcn/sidebar"
-import { usePathname, } from 'next/navigation';
 
-import { logger } from "@/lib/logger";
-import Footer from "./footer";
-import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "../shadcn/collapsible";
-import Link from "next/link";
-import { authClient } from "@/lib/auth/client";
+import Footer from "./footer"
 
 
-
-type Link = {
-    name: string,
-    link?: string,
-    icon: LucideIcon,
-    requireAuth?: boolean,
-    children?: Link[],
+type NavItem = {
+    title: string
+    href: string
+    icon: LucideIcon
+    requireAuth?: boolean
 }
 
+type NavSection = {
+    label: string
+    items: NavItem[]
+}
 
-const links: Link[] = [
-
+const navSections: NavSection[] = [
     {
-        name: "Account",
-
-        icon: CircleUserRound,
-
-        link: "/account",
-        requireAuth: true,
-        children: [
-            { name: "Dashboard", link: "/account", icon: LayoutDashboard, },
-            { name: "Settings", link: "/account/settings", icon: Settings, },
-            { name: "Security", link: "/account/security", icon: Shield, },
+        label: "Workspace",
+        items: [
+            {
+                title: "Geo",
+                href: "/geo",
+                icon: Globe2,
+                requireAuth: true,
+            },
+            {
+                title: "Playground",
+                href: "/playground",
+                icon: WandSparkles,
+                requireAuth: true,
+            },
+            {
+                title: "Assignments",
+                href: "/assignments",
+                icon: File,
+                requireAuth: true,
+            },
         ],
     },
     {
-        name: "Geo",
-        icon: Globe2,
-        link: "/geo",
-        requireAuth: true,
-    },
-    {
-        name: "Playground",
-        icon: WandSparkles,
-        link: "/playground",
-        requireAuth: true,
-    },
-    {
-        name: "Assignments",
-        icon: File,
-        link: "/assignments",
-        requireAuth: true,
+        label: "Account",
+        items: [
+            {
+                title: "Dashboard",
+                href: "/account",
+                icon: LayoutDashboard,
+                requireAuth: true,
+            },
+            {
+                title: "Settings",
+                href: "/account/settings",
+                icon: Settings,
+                requireAuth: true,
+            },
+            {
+                title: "Security",
+                href: "/account/security",
+                icon: Shield,
+                requireAuth: true,
+            },
+        ],
     },
 ]
 
-
-const matchPath = (pathname: string, link: string | undefined) => {
-    if (!link) return false
-    return pathname === link
-}
-
+const isRouteActive = (pathname: string, href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`)
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const pathname = usePathname();
-    const { data } = authClient.useSession();
+    const pathname = usePathname()
+    const { data } = authClient.useSession()
 
-    const isAuthed = !!data
+    const isAuthed = Boolean(data)
 
-
-    logger.debug("[PATH]", pathname, pathname === '/account/*')
-
+    const visibleSections = React.useMemo(
+        () =>
+            navSections
+                .map((section) => ({
+                    ...section,
+                    items: section.items.filter(
+                        (item) => !item.requireAuth || isAuthed
+                    ),
+                }))
+                .filter((section) => section.items.length > 0),
+        [isAuthed]
+    )
 
     return (
-        <Sidebar variant="inset" {...props} className="">
-            <SidebarHeader>
+        <Sidebar collapsible="offcanvas" variant="inset" {...props}>
+            <SidebarHeader className="gap-0">
                 <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild>
+                    <SidebarMenuItem >
+                        <SidebarMenuButton
+                            asChild
+                            className="h-auto min-h-14 items-start rounded-xl"
+                            size="sm"
+                        >
                             <Link href="/">
-                                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                                    <Command className="size-4" />
+                                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-9 items-center justify-center rounded-xl">
+                                    <Sparkles />
                                 </div>
-                                <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-medium">Nifty</span>
-                                    <span className="truncate text-xs">Assignment Generator</span>
+                                <div className="grid flex-1 text-left leading-tight">
+                                    <span className="truncate font-semibold">Nifty</span>
+                                    <span className="truncate text-xs text-sidebar-foreground/70">
+                                        Assignment generator studio
+                                    </span>
                                 </div>
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
+
+                {/* <SidebarSeparator /> */}
             </SidebarHeader>
+
             <SidebarContent className="font-nunito">
-                <SidebarGroup >
-                    <SidebarGroupContent className="space-y-2">
-                        {links.map(link => link.requireAuth && !isAuthed ? null : (
-                            // <SidebarGroup key={link.name}>
-                            //     <SidebarGroupContent>
-                            <SidebarMenu key={link.name}>
-                                {link.children ?
-                                    <Collapsible key={link.name}>
-                                        <SidebarMenuItem>
-                                            <CollapsibleTrigger asChild>
-                                                <SidebarMenuButton tooltip={link.name}>
-                                                    {link.icon && <link.icon />}
-                                                    <span>{link.name}</span>
-                                                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                                                </SidebarMenuButton>
-                                            </CollapsibleTrigger>
-                                            <CollapsibleContent>
-                                                <SidebarMenuSub>
-                                                    {link.children?.map((subItem) => (
-                                                        <SidebarMenuSubItem key={subItem.name}>
-                                                            <SidebarMenuSubButton asChild isActive={matchPath(pathname, subItem.link)}>
-                                                                <Link href={subItem.link || "#"} >
-                                                                    <subItem.icon />
-                                                                    <span>{subItem.name}</span>
-                                                                </Link>
-                                                            </SidebarMenuSubButton>
-                                                        </SidebarMenuSubItem>
-                                                    ))}
-                                                </SidebarMenuSub>
-                                            </CollapsibleContent>
-                                        </SidebarMenuItem>
-                                    </Collapsible>
-                                    :
-                                    <SidebarMenuItem>
-                                        <SidebarMenuButton asChild isActive={matchPath(pathname, link.link)} >
-                                            <Link href={link.link || "#"} >
-                                                <link.icon />
-                                                <span>{link.name}</span>
+                {visibleSections.map((section) => (
+                    <SidebarGroup key={section.label}>
+                        <SidebarGroupLabel>{section.label}</SidebarGroupLabel>
+                        <SidebarGroupContent>
+                            <SidebarMenu>
+                                {section.items.map((item) => (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton
+                                            asChild
+                                            isActive={isRouteActive(pathname, item.href)}
+                                            tooltip={item.title}
+                                        >
+                                            <Link href={item.href}>
+                                                <item.icon />
+                                                <span>{item.title}</span>
                                             </Link>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
-                                }
+                                ))}
                             </SidebarMenu>
-
-                        ))}
-                    </SidebarGroupContent>
-                </SidebarGroup>
-
+                        </SidebarGroupContent>
+                    </SidebarGroup>
+                ))}
             </SidebarContent>
+
             <SidebarFooter>
                 <Footer />
             </SidebarFooter>
+
+            {/* <SidebarRail /> */}
         </Sidebar>
     )
 }

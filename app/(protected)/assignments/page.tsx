@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { neon } from '@neondatabase/serverless'
 
 import { auth } from '@/lib/auth/server'
+import { getAssignmentTitle, getPlainText } from '@/lib/assignment-title'
 import { Button } from '@/components/shadcn/button'
 import AssCard, { type AssignmentGalleryItem } from './_components/ass-card'
 
@@ -14,13 +15,8 @@ type AssignmentParams = {
     topic?: string
 }
 
-type SlateNode = {
-    children?: SlateNode[]
-    text?: string
-}
-
 type AssignmentRow = {
-    content?: SlateNode[] | null
+    content?: unknown[] | null
     id: number | string
     name?: string | null
     params?: AssignmentParams | null
@@ -30,32 +26,6 @@ type LocationFeature = {
     properties?: {
         name?: string
     }
-}
-
-function collectText(node: unknown): string[] {
-    if (!node || typeof node !== 'object') {
-        return []
-    }
-
-    const currentNode = node as SlateNode
-    const text = typeof currentNode.text === 'string' ? [currentNode.text] : []
-    const children = Array.isArray(currentNode.children)
-        ? currentNode.children.flatMap(collectText)
-        : []
-
-    return [...text, ...children]
-}
-
-function getPlainText(content: unknown) {
-    if (!Array.isArray(content)) {
-        return ''
-    }
-
-    return content
-        .flatMap(collectText)
-        .join(' ')
-        .replace(/\s+/g, ' ')
-        .trim()
 }
 
 function getLocationNames(randomLocations: unknown) {
@@ -94,11 +64,7 @@ function buildGalleryItem(row: AssignmentRow): AssignmentGalleryItem {
             ? params.randomLocations.length
             : 0,
         locationNames: locationNames.slice(0, 2),
-        title:
-            row.name?.trim() ||
-            params.topic?.trim() ||
-            plainText.split(/[.!?]/)[0]?.trim() ||
-            'Untitled assignment',
+        title: getAssignmentTitle(row),
         topic: params.topic || 'General prompt',
         wordCount: plainText ? plainText.split(/\s+/).length : 0,
     }

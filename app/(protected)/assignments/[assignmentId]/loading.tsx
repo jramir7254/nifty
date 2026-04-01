@@ -1,6 +1,5 @@
 import { Separator } from '@/components/shadcn/separator'
 import { Skeleton } from '@/components/shadcn/skeleton'
-import React from 'react'
 
 export default function Loding() {
     return (
@@ -25,9 +24,11 @@ export default function Loding() {
                 <Skeleton className='w-180 h-2' />
                 <Skeleton className='w-175 h-2' />
                 <Skeleton className='w-225 h-2' />
-
             </div>
 
+            <div className='space-y-2'>
+                <Skeleton className='w-full h-65' />
+            </div>
         </div>
     )
 }

@@ -1,28 +1,29 @@
 'use server'
 
-import React from 'react'
-import { neon } from '@neondatabase/serverless';
 
+import { db } from '@/server/drizzle/db';
+import { assignments } from '@/drizzle/schema';
 import { auth } from '@/lib/auth/server';
+import { redirect } from 'next/navigation'
 
 
-export async function saveAssignmentAction(data: any) {
+export async function saveAssignmentAction(meta: any) {
     console.info('trying to save')
 
     try {
+        const { data, error } = await auth.getSession()
+        if (error || !data?.session) {
+            redirect('/auth/login')
+        }
 
-        const sql = neon(process.env.DATABASE_URL!);
+        await db.insert(assignments).values({
+            createdBy: data.user.id,
+            content: meta?.content,
+            params: meta?.params,
+        })
 
-        const { data: acc } = await auth.getSession()
-
-        console.log(acc?.user.id)
-
-        const response = await sql`
-        INSERT INTO assignments (created_by, content, params)
-        VALUES (${acc?.user.id}, ${JSON.stringify(data.content)}, ${JSON.stringify(data.params)})
-        `;
     } catch (error) {
         console.error(error)
+        throw error
     }
-
 }

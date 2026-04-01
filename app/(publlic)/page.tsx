@@ -27,6 +27,7 @@ import {
 import { ScrollArea } from '@/components/shadcn/scroll-area'
 import { Separator } from '@/components/shadcn/separator'
 import { cn } from '@/lib/utils'
+import { DottedMap } from '@/components/ui/dotted-map'
 
 const pillars = [
     {
@@ -203,6 +204,7 @@ export default function Home() {
                 </div>
 
                 <div className="relative mx-auto flex w-full max-w-[1440px] flex-col gap-14 px-6 py-10 sm:px-8 lg:px-12 lg:py-14">
+                    {/* <DottedMap /> */}
                     <SectionFrame>
                         <SectionLabel>Overview</SectionLabel>
 
@@ -556,6 +558,9 @@ export default function Home() {
                         </Card>
                     </SectionFrame>
                 </div>
+                <footer className=" flex items-center  h-50 bg-background  border-t">
+
+                </footer>
             </div>
         </ScrollArea>
     )

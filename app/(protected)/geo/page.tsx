@@ -1,7 +1,7 @@
 import { ConfigPanel } from "./_components";
 import { Suspense } from "react";
 import { MarkersLayer } from "./_components/map";
-import { Map } from "@/components/ui/map";
+import { Map } from "@/components/ui/tiler";
 
 export default function GlobePage() {
     return (
@@ -11,7 +11,8 @@ export default function GlobePage() {
                     <ConfigPanel />
                 </div>
                 <Map
-                    projection={{ type: 'globe' }}
+                    // projection={{ type: 'globe' }}
+                    projection='globe'
                     zoom={2}
                     minZoom={2}
                     styles={{

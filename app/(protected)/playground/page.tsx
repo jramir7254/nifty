@@ -43,6 +43,7 @@ import LanguageSelect from './_components/language-select'
 import TopicSelect from './_components/topic-select'
 import { useParamsStore } from './_lib/params-store'
 import { useGeoStore } from '../geo/_lib/geo_store'
+import { ScrollArea } from '@/components/shadcn/scroll-area'
 
 type LocationFeature = {
     properties?: {
@@ -219,7 +220,7 @@ export default function AssignmentPage() {
     }
 
     return (
-        <div className="relative size-full overflow-y-auto">
+        <ScrollArea className="relative size-full h-[90vh] overflow-y-auto">
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="bg-primary/6 absolute top-0 left-0 size-72 rounded-full blur-3xl" />
                 <div className="bg-highlight/30 absolute top-24 right-0 size-80 rounded-full blur-3xl" />
@@ -497,6 +498,6 @@ export default function AssignmentPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </ScrollArea>
     )
 }

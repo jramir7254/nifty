@@ -30,6 +30,9 @@ import {
     useSidebar,
 } from "@/components/shadcn/sidebar"
 import LogoutButton from "./logout-modal"
+import { UserButton } from '@neondatabase/neon-js/auth/react/ui';
+import { authClient } from "@/lib/auth/client"
+
 import LogoutModal from "./logout-modal"
 import Link from "next/link"
 import AuthGuard from "../ui/auth-guard"
@@ -39,21 +42,22 @@ export default function Footer() {
 
     return (
         <SidebarMenu>
-            <SidebarMenuItem>
-                <DropdownMenu modal>
+            <SidebarMenuItem >
+                <SidebarMenuButton
+                    size="lg"
+                    asChild
+                // className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                >
+
+                    <UserButton className="bg-background text-foreground" />
+                </SidebarMenuButton>
+                {/* <DropdownMenu modal>
                     <DropdownMenuTrigger asChild>
                         <SidebarMenuButton
                             size="lg"
-                            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                        // className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
-                            <Avatar className="h-8 w-8 rounded-lg">
-                                <AvatarImage src={'/icon.png'} alt={"Jesus Ramirez"} />
-                                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                            </Avatar>
-                            <div className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-medium">Developed By</span>
-                                <span className="truncate text-xs">Jesus Ramirez</span>
-                            </div>
+
                             <ChevronsUpDown className="ml-auto size-4" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
@@ -87,7 +91,7 @@ export default function Footer() {
                             </LogoutModal>
                         </AuthGuard>
                     </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu> */}
             </SidebarMenuItem>
         </SidebarMenu>
     )

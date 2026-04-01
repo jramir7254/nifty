@@ -4,8 +4,9 @@ import { createSlateEditor } from 'platejs';
 import { BaseEditorKit } from '@/components/plate/kits/editor-base-kit';
 import { neon } from '@neondatabase/serverless';
 import { ScrollArea } from '@/components/shadcn/scroll-area';
-
-
+import { db } from '@/server/drizzle/db';
+import { assignments } from '@/drizzle/schema';
+import { eq } from 'drizzle-orm';
 
 
 
@@ -14,23 +15,30 @@ export default async function AssignmentView({
 }: {
     params: Promise<{ assignmentId: string }>
 }) {
-    const sql = neon(process.env.DATABASE_URL!);
+
     const { assignmentId } = await params
 
+    const assignment = await db
+        .select()
+        .from(assignments)
+        .where(
+            eq(assignments.id, assignmentId)
+        ).limit(1)
+        .then(d => d[0])
 
-    const editorValue = await sql`SELECT * FROM assignments WHERE id = ${assignmentId}`;
+    const editorValue = assignment.content
 
-    console.log({ editorValue: editorValue.content })
+    console.log({ editorValue })
 
     const editor = createSlateEditor({
         // plugins: [BaseHeadingPlugin, /* ...other base plugins */],
         plugins: BaseEditorKit, // Add your base plugins
         // components: staticComponents,
-        value: editorValue[0].content,
+        value: editorValue as string,
     });
 
     return (
-        <ScrollArea className='h-[90vh] px-20'>
+        <ScrollArea className='h-[90vh] lg:px-20'>
 
             <EditorStatic
                 editor={editor}
