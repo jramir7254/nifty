@@ -16,8 +16,6 @@ import {
     CardTitle,
 } from '@/components/shadcn/card'
 import { Separator } from '@/components/shadcn/separator'
-import { CodeEditorDemo } from '@/components/ui/code-editor'
-import { Globe } from '@/components/ui/globe'
 
 const statusCards = [
     {
@@ -49,8 +47,6 @@ export default function AboutPage() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,0,0,0.08),transparent_40%)]" />
             </div>
 
-            <CodeEditorDemo />
-            <Globe />
 
             <div className="relative mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-6xl flex-col justify-center px-6 py-10 sm:px-8 lg:px-12">
                 <div className="grid items-center gap-6 xl:grid-cols-[1.1fr_0.9fr]">

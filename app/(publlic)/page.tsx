@@ -27,9 +27,8 @@ import {
 import { ScrollArea } from '@/components/shadcn/scroll-area'
 import { Separator } from '@/components/shadcn/separator'
 import { cn } from '@/lib/utils'
-import { DottedMap } from '@/components/ui/dotted-map'
-import { Globe } from '@/components/ui/globe'
-import { CodeEditorDemo } from '@/components/ui/code-editor'
+
+import { CodeEditor } from '@/components/ui/code-editor'
 
 const pillars = [
     {
@@ -49,101 +48,25 @@ const pillars = [
     },
 ] as const
 
-const audienceGroups = [
-    'ECHS',
-    'P-TECH',
-    'Industry upskilling',
-    'Transfer degrees',
-    'Military training',
-    'Non-CS graduates',
-] as const
 
-const curriculumCards = [
+const audiences = [
     {
-        title: 'CS 3 foundation',
-        description: 'The first release targeted Computer Science 3 with ACM CCECC and cybersecurity-infused outcomes.',
-        bullets: [
-            'AL-13: compare arrays, sets, maps, stacks, queues, trees, and graphs.',
-            'DS-22: describe graph terminology, properties, and special graph or tree cases.',
-        ],
-        icon: GraduationCap,
+        title: "Community College Learners",
+        body: 'Designed for the diverse student populations often found in community colleges, including Early College High School students, P-TECH pathways, workforce upskilling learners, transfer-degree students, military trainees, and non-CS majors entering computing courses.',
     },
     {
-        title: 'CS2023 expansion',
-        description: 'Later updates broadened the tool toward CS + X and current ACM curriculum guidance.',
-        bullets: [
-            'SEP-Context: connect computing to social context and the digital divide.',
-            'AL-Foundational: explain how ADT operations transform a data structure in a real-world example.',
-        ],
-        icon: Compass,
+        title: 'CS2 and CS3 Students',
+        body: 'Supports students in foundational and intermediate computer science courses by reinforcing key concepts such as data structures, algorithms, graphs, and collections. It can be used both as a learning tool and as a refresher before more advanced coursework.',
     },
     {
-        title: 'Cybersecurity and data science',
-        description: 'The project also points toward adjacent career pathways without dropping the core CS focus.',
-        bullets: [
-            'Authentication, access control, and incident-response concepts.',
-            'Secure implementation topics like input validation and abstraction.',
-            'Programming, data structures, and algorithms for analysis.',
-        ],
-        icon: ShieldCheck,
+        title: 'Honors and Competency-Based Learners',
+        body: `Serves students pursuing honors projects, CS+X pathways, and competency-based education models. The tool helps learners demonstrate mastery at their own pace while supporting deeper exploration of CS3 concepts through research and applied work.`,
     },
 ] as const
 
-const difficultyCards = [
-    {
-        title: 'CS 2 perspective',
-        body: 'Definitions were manageable, but implementation often needed more support, which led to an OER companion.',
-    },
-    {
-        title: 'CS 3 remedial use',
-        body: 'The activity frequently felt difficult because it surfaced topics students needed to revisit at the start of the semester.',
-    },
-    {
-        title: 'Graph activities',
-        body: 'Students were more comfortable declaring and populating a graph than writing methods across multiple data structures.',
-    },
-    {
-        title: 'Honors and CS + X',
-        body: "The Bloom's feature also supports honors-style research prompts across cybersecurity and data analysis themes.",
-    },
-] as const
 
-const strengths = [
-    'Strong curriculum alignment and competency coverage.',
-    'Useful consolidation of CS 2 concepts into one activity.',
-    'Regional workforce relevance for cybersecurity and data analytics.',
-    'Interdisciplinary coverage across CS, programming, cyber, and data.',
-    'Flexible enough to fit different courses and delivery styles.',
-] as const
 
-const constraints = [
-    'Some assignments require substantial time.',
-    'Students may face topics not covered in local notes or textbooks.',
-    'Educators may need to pace the output as a lab versus a full assignment.',
-] as const
 
-const faqItems = [
-    {
-        question: 'What goes into a generated assignment?',
-        answer: "Bloom's for Computing, local sense-of-belonging context, and a topic or learning outcome chosen by the educator.",
-    },
-    {
-        question: 'How long is it meant to take?',
-        answer: 'The target window is one to two hours, though observed completion times varied by course level and student background.',
-    },
-    {
-        question: 'What is required to use it?',
-        answer: 'The application uses the OpenAI Model API on token-based pricing and requires an OpenAI account.',
-    },
-] as const
-
-function SectionLabel({ children }: { children: ReactNode }) {
-    return (
-        <div className="w-fit rounded-full border border-border/70 bg-background/85 px-3 py-1 text-[11px] tracking-[0.28em] uppercase text-muted-foreground">
-            {children}
-        </div>
-    )
-}
 
 function SectionFrame({
     children,
@@ -195,6 +118,16 @@ function ListCard({
     )
 }
 
+
+const niftyAssignment = `
+public class NiftyAssignment {
+  public static void main(String[] args) {
+    String name = args.length > 0 ? args[0] : "User";
+    System.out.println("Hello, " + name + "! Welcome to your nifty assignment.");
+  }
+}
+`;
+
 export default function Home() {
     return (
         <ScrollArea className="h-[calc(100vh-4rem)] bg-background">
@@ -208,7 +141,7 @@ export default function Home() {
                 <div className="relative mx-auto flex w-full max-w-360 flex-col gap-14 px-6 py-10 sm:px-8 lg:px-12 lg:py-14">
                     <SectionFrame>
 
-                        <div className="grid gap-6 items-center xl:grid-cols-[0.88fr_1.12fr] h-[calc(100vh-4rem)]">
+                        <div className="grid gap-6 items-center xl:grid-cols-[0.88fr_1.15fr] h-[calc(100vh-4rem)]">
                             <div className="space-y-5">
                                 <h1 className="font-[family:var(--font-nunito)] text-4xl leading-tight font-semibold text-balance sm:text-5xl lg:text-6xl">
                                     Nifty Assignment Generator
@@ -224,38 +157,27 @@ export default function Home() {
                             </div>
 
                             <div className="flex items-center justify-center">
-                                <div className="relative aspect-square w-full max-w-[38rem]">
-                                    {/* <CodeEditorDemo /> */}
-                                </div>
+                                <CodeEditor className='max-w-[90vw]!' lang='java' title='NiftyAssignment.java' duration={3}>
+                                    {niftyAssignment}
+                                </CodeEditor>
                             </div>
                         </div>
                     </SectionFrame>
-                    <Separator />
+                    {/* <Separator /> */}
                     <SectionFrame>
 
-                        <div className="grid gap-6 items-center xl:grid-cols-[0.88fr_1.12fr] ">
+                        <div className="grid gap-6 items-start xl:grid-cols-[0.88fr_1.12fr] pb-20">
                             <div className="space-y-5">
                                 <h2 className="font-[family:var(--font-nunito)] text-4xl leading-tight font-semibold text-balance sm:text-5xl lg:text-6xl">
-                                    What is this?
+                                    Purpose
                                 </h2>
                                 <p className="max-w-2xl text-base leading-7 text-foreground/75">
-                                    The tool is a software application designed to generate nifty assignments for computer science
-                                    courses to help educators create engaging and pedagogically aligned learning assignments by
-                                    integrating Bloom’s for Computing into the assignment generation process. By selecting a Bloom’s level,
-                                    ranging from lower order thinking skills such as remembering and understanding to higher order skills like
-                                    analyzing, evaluating, and creating, educators can certify that each assignment aligns with their intended
-                                    learning outcomes and assessment verbs. The tool also offers a feature that allows educators to incorporate
-                                    local city infrastructures, such as schools or transportation systems, into the assignment context to foster
-                                    a sense of belonging and relevance that encourages students to connect computing concepts with real world
-                                    applications in their own communities, resulting with an assignment that enhances learning outcomes and boosts
-                                    student engagement.
-
+                                    The tool is a software application that generates engaging assignments for computer science courses, integrating Bloom’s Taxonomy to ensure alignment with learning outcomes. Educators can select Bloom’s levels to incorporate a range of cognitive skills while contextualizing assignments within local city infrastructures, fostering relevance for students. This approach enhances learning outcomes and boosts student engagement, focusing on three key areas: Bloom’s levels integration, local context incorporation, and improved engagement.
                                 </p>
-
                             </div>
 
                             <div className="flex items-center justify-center">
-                                <div className="relative aspect-square w-full max-w-[38rem]">
+                                <div className="grid gap-4">
                                     {pillars.map(({ body, icon: Icon, title }) => (
                                         <div
                                             className="rounded-2xl border border-border/70 bg-muted/25 p-4"
@@ -278,11 +200,60 @@ export default function Home() {
                             </div>
                         </div>
                     </SectionFrame>
+                    <Separator />
+
+                    <SectionFrame>
+                        <div className="grid gap-6 justify-center items-center xl:grid-rows-[0.88fr_1.12fr] py-20 ">
+                            <div className="flex justify-center space-y-5 ">
+                                <h2 className="font-[family:var(--font-nunito)] text-4xl leading-tight font-semibold text-balance sm:text-5xl lg:text-6xl">
+                                    Audiences
+                                </h2>
+                            </div>
+
+                            <div className="flex items-center justify-center">
+                                <div className="grid lg:grid-cols-3 gap-4">
+                                    {audiences.map(({ body, title }) => (
+                                        <div
+                                            className="rounded-2xl border border-border/70 bg-muted/25 p-4"
+                                            key={title}
+                                        >
+                                            <div className="flex flex-col items-center gap-4">
+                                                <p className="font-medium">{title}</p>
+                                                <p className="text-sm leading-6 text-foreground/75">
+                                                    {body}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </SectionFrame>
 
 
 
                 </div>
-                <footer className=" flex items-center  h-50 bg-background  border-t">
+                <footer className=" flex items-center font-nunito   h-50 bg-background  border-t">
+                    <div className='flex flex-col gap-5 px-10 lg:flex-row justify-between  mx-auto w-full max-w-360 '>
+                        <div>
+                            <h4>Principal Investigator</h4>
+                            <a className='text-muted-foreground hover:underline' href='https://christianservin.com/'>
+                                Christian Servin, Ph.D.
+                            </a>
+                            <p className='text-muted-foreground'>
+                                cservin1@epcc.edu
+                            </p>
+                        </div>
+                        <div>
+                            <h4>Developed By</h4>
+                            <a className='text-muted-foreground hover:underline' href='https://www.jesusramirez.dev/'>
+                                Jesus Ramirez
+                            </a>
+                            <p className='text-muted-foreground'>
+                                jrami904@epcc.edu
+                            </p>
+                        </div>
+                    </div>
 
                 </footer>
             </div>
