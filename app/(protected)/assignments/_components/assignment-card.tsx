@@ -59,7 +59,7 @@ function StatBlock({
     )
 }
 
-export default function AssCard({ assignment }: AssCardProps) {
+export default function AssignmentCard({ assignment }: AssCardProps) {
     return (
         <Card className="relative h-full overflow-hidden border-border/70 bg-background/90 backdrop-blur transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-linear-to-br from-primary/10 via-transparent to-highlight/20" />
@@ -126,7 +126,7 @@ export default function AssCard({ assignment }: AssCardProps) {
                 ) : null}
             </CardContent> */}
 
-            <CardFooter className="gap-3">
+            {/* <CardFooter className="gap-3">
                 <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
                     <div className="flex items-center gap-2">
                         <BookOpenIcon className="size-4" />
@@ -141,7 +141,7 @@ export default function AssCard({ assignment }: AssCardProps) {
                         </span>
                     </div>
                 </div>
-            </CardFooter>
+            </CardFooter> */}
         </Card>
     )
 }

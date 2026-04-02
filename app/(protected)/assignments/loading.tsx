@@ -1,5 +1,6 @@
 import {
     Card,
+    CardAction,
     CardContent,
     CardHeader,
 } from '@/components/shadcn/card'
@@ -10,16 +11,18 @@ function LoadingCard() {
         <Card>
             <CardHeader className="gap-3">
                 <Skeleton className="h-5 w-32" />
-                <Skeleton className="h-6 w-3/4" />
-                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-5 w-3/4" />
+                <CardAction>
+                    <Skeleton className='w-20 h-8' />
+                </CardAction>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
                 <Skeleton className="h-14 w-full" />
-                <div className="grid grid-cols-3 gap-2">
+                {/* <div className="grid grid-cols-3 gap-2">
                     <Skeleton className="h-16 w-full" />
                     <Skeleton className="h-16 w-full" />
                     <Skeleton className="h-16 w-full" />
-                </div>
+                </div> */}
             </CardContent>
         </Card>
     )

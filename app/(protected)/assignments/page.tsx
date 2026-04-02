@@ -4,7 +4,7 @@ import { neon } from '@neondatabase/serverless'
 import { auth } from '@/lib/auth/server'
 import { getAssignmentTitle, getPlainText } from '@/lib/assignment-title'
 import { Button } from '@/components/shadcn/button'
-import AssCard, { type AssignmentGalleryItem } from './_components/ass-card'
+import AssignmentCard, { type AssignmentGalleryItem } from './_components/assignment-card'
 
 type AssignmentParams = {
     additionalContext?: string
@@ -139,7 +139,7 @@ export default async function AssignmentsPage() {
                 ) : (
                     <section className="grid auto-rows-fr gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                         {assignments.map((assignment) => (
-                            <AssCard assignment={assignment} key={assignment.id} />
+                            <AssignmentCard assignment={assignment} key={assignment.id} />
                         ))}
                     </section>
                 )}

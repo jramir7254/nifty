@@ -12,8 +12,8 @@ export default async function AccountPage({ params }: { params: Promise<{ path: 
     const { path } = await params;
 
     return (
-        <ScrollArea className="container    max-h-200 p-4 md:p-6 w-full">
-            <AccountView hideNav className='w-full' path={path} />
+        <ScrollArea className="max-h-200 p-4 md:p-6 w-full">
+            <AccountView hideNav className='' path={path} />
         </ScrollArea>
     );
 }

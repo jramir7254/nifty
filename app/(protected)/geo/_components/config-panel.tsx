@@ -77,7 +77,7 @@ export function ConfigPanel() {
     }
 
     return (
-        <Collapsible className={open ? 'w-[min(92vw,24rem)]' : 'w-auto'} open={open} onOpenChange={setOpen}>
+        <Collapsible className={open ? 'w-[min(95vw,35rem)]' : 'w-auto'} open={open} onOpenChange={setOpen}>
             {open ? (
                 <ScrollArea className="h-[70vh]">
                     <Card className="border-border/70 bg-background/85 shadow-xl backdrop-blur-xl">
@@ -203,7 +203,7 @@ export function ConfigPanel() {
 
                             <Separator />
 
-                            <div className="flex flex-col gap-3">
+                            {/* <div className="flex flex-col gap-3">
                                 <div className="flex items-center gap-2">
                                     <Globe2 className="size-4 text-muted-foreground" />
                                     <p className="text-sm font-medium">Current globe snapshot</p>
@@ -225,7 +225,7 @@ export function ConfigPanel() {
                                         </span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </CardContent>
 
                         <CardFooter className="flex flex-col items-stretch gap-4">

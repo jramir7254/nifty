@@ -28,6 +28,8 @@ import { ScrollArea } from '@/components/shadcn/scroll-area'
 import { Separator } from '@/components/shadcn/separator'
 import { cn } from '@/lib/utils'
 import { DottedMap } from '@/components/ui/dotted-map'
+import { Globe } from '@/components/ui/globe'
+import { CodeEditorDemo } from '@/components/ui/code-editor'
 
 const pillars = [
     {
@@ -199,165 +201,18 @@ export default function Home() {
             <div className="relative min-h-full overflow-hidden">
                 <div className="pointer-events-none absolute inset-0 overflow-hidden">
                     <div className="absolute top-0 left-0 size-80 rounded-full bg-primary/8 blur-3xl" />
-                    <div className="absolute top-24 right-0 size-96 rounded-full bg-highlight/30 blur-3xl" />
+                    <div className="absolute top-24 right-0 size-96 rounded-full bg-blue-800/30 blur-3xl" />
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,0,0,0.08),transparent_40%)]" />
                 </div>
 
-                <div className="relative mx-auto flex w-full max-w-[1440px] flex-col gap-14 px-6 py-10 sm:px-8 lg:px-12 lg:py-14">
-                    {/* <DottedMap /> */}
+                <div className="relative mx-auto flex w-full max-w-360 flex-col gap-14 px-6 py-10 sm:px-8 lg:px-12 lg:py-14">
                     <SectionFrame>
-                        <SectionLabel>Overview</SectionLabel>
 
-                        <div className="grid gap-6 xl:grid-cols-[1.06fr_0.94fr]">
-                            <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
-                                <CardContent className="flex h-full flex-col gap-8 p-8 sm:p-10">
-                                    <div className="flex flex-wrap gap-3">
-                                        <div className="rounded-full border border-border/70 bg-muted/35 px-4 py-2 text-sm text-foreground/75">
-                                            OpenAI-powered generation
-                                        </div>
-                                        <div className="rounded-full border border-border/70 bg-muted/35 px-4 py-2 text-sm text-foreground/75">
-                                            Community-college focused
-                                        </div>
-                                    </div>
-
-                                    <div className="max-w-4xl space-y-5">
-                                        <h1 className="font-[family:var(--font-nunito)] text-4xl leading-tight font-semibold text-balance sm:text-5xl lg:text-6xl">
-                                            Generate computing assignments that stay grounded in
-                                            learning outcomes, Bloom&apos;s rigor, and local
-                                            relevance.
-                                        </h1>
-                                        <p className="max-w-3xl text-base leading-7 text-foreground/75 sm:text-lg">
-                                            Nifty Assignments helps educators create engaging
-                                            computer science activities by blending Bloom&apos;s for
-                                            Computing, topic alignment, and familiar community
-                                            systems into one assignment-generation workflow.
-                                        </p>
-                                    </div>
-
-                                    <div className="flex flex-wrap gap-3">
-                                        <Button asChild className="rounded-full px-6">
-                                            <Link href="/auth/sign-up">
-                                                Create an account
-                                                <ArrowRight className="size-4" />
-                                            </Link>
-                                        </Button>
-                                        <Button asChild className="rounded-full px-6" variant="outline">
-                                            <Link href="/auth/login">Log in</Link>
-                                        </Button>
-                                        <Button asChild className="rounded-full px-6" variant="ghost">
-                                            <a
-                                                href="https://platform.openai.com/docs/pricing"
-                                                rel="noreferrer"
-                                                target="_blank"
-                                            >
-                                                View API pricing
-                                            </a>
-                                        </Button>
-                                    </div>
-
-                                    <div className="mt-auto grid gap-3 sm:grid-cols-3">
-                                        <Card className="border-border/60 bg-muted/30 shadow-none">
-                                            <CardContent className="space-y-2 p-5">
-                                                <p className="text-3xl font-semibold">3</p>
-                                                <p className="text-sm leading-6 text-foreground/75">
-                                                    inputs shape each assignment: rigor, local
-                                                    context, and topic
-                                                </p>
-                                            </CardContent>
-                                        </Card>
-                                        <Card className="border-border/60 bg-muted/30 shadow-none">
-                                            <CardContent className="space-y-2 p-5">
-                                                <p className="text-3xl font-semibold">1-2 hrs</p>
-                                                <p className="text-sm leading-6 text-foreground/75">
-                                                    intended completion window, depending on scope
-                                                    and course readiness
-                                                </p>
-                                            </CardContent>
-                                        </Card>
-                                        <Card className="border-border/60 bg-muted/30 shadow-none">
-                                            <CardContent className="space-y-2 p-5">
-                                                <p className="text-3xl font-semibold">CS + X</p>
-                                                <p className="text-sm leading-6 text-foreground/75">
-                                                    expansion into cybersecurity, data science,
-                                                    and adjacent pathways
-                                                </p>
-                                            </CardContent>
-                                        </Card>
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <div className="grid gap-4">
-                                <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
-                                    <CardHeader>
-                                        <CardTitle>What shapes each assignment</CardTitle>
-                                        <CardDescription className="leading-6 text-foreground/75">
-                                            The generator is designed so educators steer the task
-                                            instead of settling for a generic prompt.
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent className="grid gap-4">
-                                        {pillars.map(({ body, icon: Icon, title }) => (
-                                            <div
-                                                className="rounded-2xl border border-border/70 bg-muted/25 p-4"
-                                                key={title}
-                                            >
-                                                <div className="flex items-start gap-4">
-                                                    <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                                                        <Icon className="size-5" />
-                                                    </div>
-                                                    <div className="space-y-1.5">
-                                                        <p className="font-medium">{title}</p>
-                                                        <p className="text-sm leading-6 text-foreground/75">
-                                                            {body}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </CardContent>
-                                </Card>
-
-                                <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
-                                    <CardHeader>
-                                        <CardTitle>Access and usage notes</CardTitle>
-                                        <CardDescription className="leading-6 text-foreground/75">
-                                            Practical details called out in the project notes.
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent className="space-y-3">
-                                        {[
-                                            'Built on the OpenAI Model API with token-based pricing.',
-                                            'Requires an OpenAI account to use the full application.',
-                                            'Originally built for CS 3 and expanded toward broader computing programs.',
-                                        ].map((item) => (
-                                            <div
-                                                className="flex gap-3 rounded-2xl border border-border/70 bg-muted/25 p-4"
-                                                key={item}
-                                            >
-                                                <span className="mt-2 size-2 shrink-0 rounded-full bg-primary/70" />
-                                                <p className="text-sm leading-6 text-foreground/75">
-                                                    {item}
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </CardContent>
-                                </Card>
-                            </div>
-                        </div>
-                    </SectionFrame>
-
-                    <Separator />
-
-                    <SectionFrame>
-                        <SectionLabel>Curriculum Fit</SectionLabel>
-
-                        <div className="grid gap-6 xl:grid-cols-[0.88fr_1.12fr]">
+                        <div className="grid gap-6 items-center xl:grid-cols-[0.88fr_1.12fr] h-[calc(100vh-4rem)]">
                             <div className="space-y-5">
-                                <h2 className="font-[family:var(--font-nunito)] text-3xl leading-tight font-semibold text-balance sm:text-4xl">
-                                    Built for real computing pathways, not a generic worksheet
-                                    generator.
-                                </h2>
+                                <h1 className="font-[family:var(--font-nunito)] text-4xl leading-tight font-semibold text-balance sm:text-5xl lg:text-6xl">
+                                    Nifty Assignment Generator
+                                </h1>
                                 <p className="max-w-2xl text-base leading-7 text-foreground/75">
                                     The first implementation centered on Computer Science 3,
                                     especially data structures, graph terminology, and nearby
@@ -365,198 +220,67 @@ export default function Home() {
                                     toward CS + X programs where computing opens the door to
                                     adjacent fields.
                                 </p>
-                                <div className="rounded-3xl border border-border/70 bg-muted/30 p-5">
-                                    <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">
-                                        Intended learners
-                                    </p>
-                                    <div className="mt-4 flex flex-wrap gap-3">
-                                        {audienceGroups.map((group) => (
-                                            <div
-                                                className="rounded-full border border-border/70 bg-background/85 px-4 py-2 text-sm text-foreground/75"
-                                                key={group}
-                                            >
-                                                {group}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+
                             </div>
 
-                            <div className="grid gap-4 lg:grid-cols-3">
-                                {curriculumCards.map((card) => (
-                                    <ListCard
-                                        bullets={card.bullets}
-                                        description={card.description}
-                                        icon={card.icon}
-                                        key={card.title}
-                                        title={card.title}
-                                    />
-                                ))}
+                            <div className="flex items-center justify-center">
+                                <div className="relative aspect-square w-full max-w-[38rem]">
+                                    {/* <CodeEditorDemo /> */}
+                                </div>
                             </div>
                         </div>
                     </SectionFrame>
-
                     <Separator />
-
                     <SectionFrame>
-                        <SectionLabel>Difficulty and Delivery</SectionLabel>
 
-                        <div className="grid gap-6 xl:grid-cols-[1.02fr_0.98fr]">
-                            <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
-                                <CardHeader className="space-y-4">
-                                    <div className="flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                                        <TimerReset className="size-5" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <CardTitle className="text-2xl">
-                                            Calibrated for flexible delivery
-                                        </CardTitle>
-                                        <CardDescription className="max-w-2xl text-sm leading-6 text-foreground/75">
-                                            The write-up describes the tool as modular: educators
-                                            can adjust complexity, treat the output as a lab or
-                                            assignment, and use it in traditional or
-                                            competency-based formats.
-                                        </CardDescription>
-                                    </div>
-                                </CardHeader>
-                                <CardContent className="grid gap-4 sm:grid-cols-2">
-                                    <div className="rounded-3xl border border-border/70 bg-muted/25 p-5">
-                                        <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">
-                                            In theory
-                                        </p>
-                                        <p className="mt-3 text-3xl font-semibold">1 to 2 hours</p>
-                                        <p className="mt-3 text-sm leading-6 text-foreground/75">
-                                            That range assumes the educator selects a scope that
-                                            matches the class and student background.
-                                        </p>
-                                    </div>
-                                    <div className="rounded-3xl border border-border/70 bg-muted/25 p-5">
-                                        <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">
-                                            In practice
-                                        </p>
-                                        <p className="mt-3 text-3xl font-semibold">About 1 hour</p>
-                                        <p className="mt-3 text-sm leading-6 text-foreground/75">
-                                            Many CS 3 students finished around an hour, while
-                                            some CS 2 learners needed closer to two.
-                                        </p>
-                                    </div>
-                                    <div className="rounded-3xl border border-border/70 bg-muted/25 p-5 sm:col-span-2">
-                                        <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">
-                                            Where it fits
-                                        </p>
-                                        <p className="mt-3 text-sm leading-7 text-foreground/75">
-                                            It can work as a refresher, a diagnostic, a
-                                            graph-heavy implementation activity, an honors-style
-                                            research prompt, or a competency-based checkpoint.
-                                        </p>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                        <div className="grid gap-6 items-center xl:grid-cols-[0.88fr_1.12fr] ">
+                            <div className="space-y-5">
+                                <h2 className="font-[family:var(--font-nunito)] text-4xl leading-tight font-semibold text-balance sm:text-5xl lg:text-6xl">
+                                    What is this?
+                                </h2>
+                                <p className="max-w-2xl text-base leading-7 text-foreground/75">
+                                    The tool is a software application designed to generate nifty assignments for computer science
+                                    courses to help educators create engaging and pedagogically aligned learning assignments by
+                                    integrating Bloom’s for Computing into the assignment generation process. By selecting a Bloom’s level,
+                                    ranging from lower order thinking skills such as remembering and understanding to higher order skills like
+                                    analyzing, evaluating, and creating, educators can certify that each assignment aligns with their intended
+                                    learning outcomes and assessment verbs. The tool also offers a feature that allows educators to incorporate
+                                    local city infrastructures, such as schools or transportation systems, into the assignment context to foster
+                                    a sense of belonging and relevance that encourages students to connect computing concepts with real world
+                                    applications in their own communities, resulting with an assignment that enhances learning outcomes and boosts
+                                    student engagement.
 
-                            <div className="grid gap-4 sm:grid-cols-2">
-                                {difficultyCards.map((card) => (
-                                    <Card
-                                        className="border-border/70 bg-background/90 shadow-sm backdrop-blur"
-                                        key={card.title}
-                                    >
-                                        <CardHeader className="space-y-4">
-                                            <div className="flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                                                <Compass className="size-5" />
+                                </p>
+
+                            </div>
+
+                            <div className="flex items-center justify-center">
+                                <div className="relative aspect-square w-full max-w-[38rem]">
+                                    {pillars.map(({ body, icon: Icon, title }) => (
+                                        <div
+                                            className="rounded-2xl border border-border/70 bg-muted/25 p-4"
+                                            key={title}
+                                        >
+                                            <div className="flex items-start gap-4">
+                                                <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                                                    <Icon className="size-5" />
+                                                </div>
+                                                <div className="space-y-1.5">
+                                                    <p className="font-medium">{title}</p>
+                                                    <p className="text-sm leading-6 text-foreground/75">
+                                                        {body}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div className="space-y-2">
-                                                <CardTitle className="text-lg">{card.title}</CardTitle>
-                                                <CardDescription className="text-sm leading-6 text-foreground/75">
-                                                    {card.body}
-                                                </CardDescription>
-                                            </div>
-                                        </CardHeader>
-                                    </Card>
-                                ))}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </SectionFrame>
 
-                    <Separator />
 
-                    <SectionFrame>
-                        <SectionLabel>Strengths and Constraints</SectionLabel>
 
-                        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-                            <ListCard
-                                bullets={strengths}
-                                description="The strongest themes in the document are alignment, flexibility, and relevance to workforce-oriented two-year programs."
-                                icon={ShieldCheck}
-                                title="What the tool does well"
-                            />
-
-                            <div className="grid gap-4">
-                                <ListCard
-                                    bullets={constraints}
-                                    className="border-amber-500/25"
-                                    description="The main tradeoff is time: some outputs stretch students beyond what has already been covered in course notes or textbooks."
-                                    icon={TriangleAlert}
-                                    title="What educators still need to manage"
-                                />
-
-                                <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
-                                    <CardHeader>
-                                        <CardTitle>Common questions from the write-up</CardTitle>
-                                        <CardDescription className="text-sm leading-6 text-foreground/75">
-                                            Replaced the generic FAQ placeholder with answers
-                                            supported by the source document.
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent className="space-y-3">
-                                        {faqItems.map(({ answer, question }) => (
-                                            <div
-                                                className="rounded-2xl border border-border/70 bg-muted/25 p-5"
-                                                key={question}
-                                            >
-                                                <p className="font-medium">{question}</p>
-                                                <p className="mt-2 text-sm leading-6 text-foreground/75">
-                                                    {answer}
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </CardContent>
-                                </Card>
-                            </div>
-                        </div>
-                    </SectionFrame>
-
-                    <Separator />
-
-                    <SectionFrame className="pb-2">
-                        <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
-                            <CardContent className="flex flex-col gap-6 p-8 sm:p-10 lg:flex-row lg:items-end lg:justify-between">
-                                <div className="max-w-3xl space-y-4">
-                                    <SectionLabel>Next Step</SectionLabel>
-                                    <h2 className="font-[family:var(--font-nunito)] text-3xl leading-tight font-semibold text-balance sm:text-4xl">
-                                        Replace the wireframe with a homepage that actually
-                                        explains the product.
-                                    </h2>
-                                    <p className="text-base leading-7 text-foreground/75">
-                                        The page now reflects the documented goals of Nifty
-                                        Assignments: relevant computing activities, stronger
-                                        community connection, and better control over rigor and
-                                        pacing.
-                                    </p>
-                                </div>
-
-                                <div className="flex flex-wrap gap-3">
-                                    <Button asChild className="rounded-full px-6">
-                                        <Link href="/auth/sign-up">
-                                            Get started
-                                            <ArrowRight className="size-4" />
-                                        </Link>
-                                    </Button>
-                                    <Button asChild className="rounded-full px-6" variant="outline">
-                                        <Link href="/about">Learn more</Link>
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </SectionFrame>
                 </div>
                 <footer className=" flex items-center  h-50 bg-background  border-t">
 
@@ -565,3 +289,298 @@ export default function Home() {
         </ScrollArea>
     )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//   <SectionFrame>
+//                         <SectionLabel>Overview</SectionLabel>
+
+//                         <div className="grid gap-6 xl:grid-cols-[1.06fr_0.94fr]">
+//                             <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
+//                                 <CardContent className="flex h-full flex-col gap-8 p-8 sm:p-10">
+//                                     <div className="flex flex-wrap gap-3">
+//                                         <div className="rounded-full border border-border/70 bg-muted/35 px-4 py-2 text-sm text-foreground/75">
+//                                             OpenAI-powered generation
+//                                         </div>
+//                                         <div className="rounded-full border border-border/70 bg-muted/35 px-4 py-2 text-sm text-foreground/75">
+//                                             Community-college focused
+//                                         </div>
+//                                     </div>
+
+//                                     <div className="max-w-4xl space-y-5">
+//                                         <h1 className="font-[family:var(--font-nunito)] text-4xl leading-tight font-semibold text-balance sm:text-5xl lg:text-6xl">
+//                                             Generate computing assignments that stay grounded in
+//                                             learning outcomes, Bloom&apos;s rigor, and local
+//                                             relevance.
+//                                         </h1>
+//                                         <p className="max-w-3xl text-base leading-7 text-foreground/75 sm:text-lg">
+//                                             Nifty Assignments helps educators create engaging
+//                                             computer science activities by blending Bloom&apos;s for
+//                                             Computing, topic alignment, and familiar community
+//                                             systems into one assignment-generation workflow.
+//                                         </p>
+//                                     </div>
+
+//                                     <div className="flex flex-wrap gap-3">
+//                                         <Button asChild className="rounded-full px-6">
+//                                             <Link href="/auth/sign-up">
+//                                                 Create an account
+//                                                 <ArrowRight className="size-4" />
+//                                             </Link>
+//                                         </Button>
+//                                         <Button asChild className="rounded-full px-6" variant="outline">
+//                                             <Link href="/auth/login">Log in</Link>
+//                                         </Button>
+//                                         <Button asChild className="rounded-full px-6" variant="ghost">
+//                                             <a
+//                                                 href="https://platform.openai.com/docs/pricing"
+//                                                 rel="noreferrer"
+//                                                 target="_blank"
+//                                             >
+//                                                 View API pricing
+//                                             </a>
+//                                         </Button>
+//                                     </div>
+
+//                                     <div className="mt-auto grid gap-3 sm:grid-cols-3">
+//                                         <Card className="border-border/60 bg-muted/30 shadow-none">
+//                                             <CardContent className="space-y-2 p-5">
+//                                                 <p className="text-3xl font-semibold">3</p>
+//                                                 <p className="text-sm leading-6 text-foreground/75">
+//                                                     inputs shape each assignment: rigor, local
+//                                                     context, and topic
+//                                                 </p>
+//                                             </CardContent>
+//                                         </Card>
+//                                         <Card className="border-border/60 bg-muted/30 shadow-none">
+//                                             <CardContent className="space-y-2 p-5">
+//                                                 <p className="text-3xl font-semibold">1-2 hrs</p>
+//                                                 <p className="text-sm leading-6 text-foreground/75">
+//                                                     intended completion window, depending on scope
+//                                                     and course readiness
+//                                                 </p>
+//                                             </CardContent>
+//                                         </Card>
+//                                         <Card className="border-border/60 bg-muted/30 shadow-none">
+//                                             <CardContent className="space-y-2 p-5">
+//                                                 <p className="text-3xl font-semibold">CS + X</p>
+//                                                 <p className="text-sm leading-6 text-foreground/75">
+//                                                     expansion into cybersecurity, data science,
+//                                                     and adjacent pathways
+//                                                 </p>
+//                                             </CardContent>
+//                                         </Card>
+//                                     </div>
+//                                 </CardContent>
+//                             </Card>
+
+//                             <div className="grid gap-4">
+//                                 <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
+//                                     <CardHeader>
+//                                         <CardTitle>What shapes each assignment</CardTitle>
+//                                         <CardDescription className="leading-6 text-foreground/75">
+//                                             The generator is designed so educators steer the task
+//                                             instead of settling for a generic prompt.
+//                                         </CardDescription>
+//                                     </CardHeader>
+//                                     <CardContent className="grid gap-4">
+//                                         {pillars.map(({ body, icon: Icon, title }) => (
+//                                             <div
+//                                                 className="rounded-2xl border border-border/70 bg-muted/25 p-4"
+//                                                 key={title}
+//                                             >
+//                                                 <div className="flex items-start gap-4">
+//                                                     <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+//                                                         <Icon className="size-5" />
+//                                                     </div>
+//                                                     <div className="space-y-1.5">
+//                                                         <p className="font-medium">{title}</p>
+//                                                         <p className="text-sm leading-6 text-foreground/75">
+//                                                             {body}
+//                                                         </p>
+//                                                     </div>
+//                                                 </div>
+//                                             </div>
+//                                         ))}
+//                                     </CardContent>
+//                                 </Card>
+
+//                                 <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
+//                                     <CardHeader>
+//                                         <CardTitle>Access and usage notes</CardTitle>
+//                                         <CardDescription className="leading-6 text-foreground/75">
+//                                             Practical details called out in the project notes.
+//                                         </CardDescription>
+//                                     </CardHeader>
+//                                     <CardContent className="space-y-3">
+//                                         {[
+//                                             'Built on the OpenAI Model API with token-based pricing.',
+//                                             'Requires an OpenAI account to use the full application.',
+//                                             'Originally built for CS 3 and expanded toward broader computing programs.',
+//                                         ].map((item) => (
+//                                             <div
+//                                                 className="flex gap-3 rounded-2xl border border-border/70 bg-muted/25 p-4"
+//                                                 key={item}
+//                                             >
+//                                                 <span className="mt-2 size-2 shrink-0 rounded-full bg-primary/70" />
+//                                                 <p className="text-sm leading-6 text-foreground/75">
+//                                                     {item}
+//                                                 </p>
+//                                             </div>
+//                                         ))}
+//                                     </CardContent>
+//                                 </Card>
+//                             </div>
+//                         </div>
+//                     </SectionFrame>
+
+//                     <Separator />
+
+
+
+//                     <Separator />
+
+//                     <SectionFrame>
+//                         <SectionLabel>Difficulty and Delivery</SectionLabel>
+
+//                         <div className="grid gap-6 xl:grid-cols-[1.02fr_0.98fr]">
+//                             <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
+//                                 <CardHeader className="space-y-4">
+//                                     <div className="flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+//                                         <TimerReset className="size-5" />
+//                                     </div>
+//                                     <div className="space-y-2">
+//                                         <CardTitle className="text-2xl">
+//                                             Calibrated for flexible delivery
+//                                         </CardTitle>
+//                                         <CardDescription className="max-w-2xl text-sm leading-6 text-foreground/75">
+//                                             The write-up describes the tool as modular: educators
+//                                             can adjust complexity, treat the output as a lab or
+//                                             assignment, and use it in traditional or
+//                                             competency-based formats.
+//                                         </CardDescription>
+//                                     </div>
+//                                 </CardHeader>
+//                                 <CardContent className="grid gap-4 sm:grid-cols-2">
+//                                     <div className="rounded-3xl border border-border/70 bg-muted/25 p-5">
+//                                         <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">
+//                                             In theory
+//                                         </p>
+//                                         <p className="mt-3 text-3xl font-semibold">1 to 2 hours</p>
+//                                         <p className="mt-3 text-sm leading-6 text-foreground/75">
+//                                             That range assumes the educator selects a scope that
+//                                             matches the class and student background.
+//                                         </p>
+//                                     </div>
+//                                     <div className="rounded-3xl border border-border/70 bg-muted/25 p-5">
+//                                         <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">
+//                                             In practice
+//                                         </p>
+//                                         <p className="mt-3 text-3xl font-semibold">About 1 hour</p>
+//                                         <p className="mt-3 text-sm leading-6 text-foreground/75">
+//                                             Many CS 3 students finished around an hour, while
+//                                             some CS 2 learners needed closer to two.
+//                                         </p>
+//                                     </div>
+//                                     <div className="rounded-3xl border border-border/70 bg-muted/25 p-5 sm:col-span-2">
+//                                         <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">
+//                                             Where it fits
+//                                         </p>
+//                                         <p className="mt-3 text-sm leading-7 text-foreground/75">
+//                                             It can work as a refresher, a diagnostic, a
+//                                             graph-heavy implementation activity, an honors-style
+//                                             research prompt, or a competency-based checkpoint.
+//                                         </p>
+//                                     </div>
+//                                 </CardContent>
+//                             </Card>
+
+//                             <div className="grid gap-4 sm:grid-cols-2">
+//                                 {difficultyCards.map((card) => (
+//                                     <Card
+//                                         className="border-border/70 bg-background/90 shadow-sm backdrop-blur"
+//                                         key={card.title}
+//                                     >
+//                                         <CardHeader className="space-y-4">
+//                                             <div className="flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+//                                                 <Compass className="size-5" />
+//                                             </div>
+//                                             <div className="space-y-2">
+//                                                 <CardTitle className="text-lg">{card.title}</CardTitle>
+//                                                 <CardDescription className="text-sm leading-6 text-foreground/75">
+//                                                     {card.body}
+//                                                 </CardDescription>
+//                                             </div>
+//                                         </CardHeader>
+//                                     </Card>
+//                                 ))}
+//                             </div>
+//                         </div>
+//                     </SectionFrame>
+
+//                     <Separator />
+
+//                     <SectionFrame>
+//                         <SectionLabel>Strengths and Constraints</SectionLabel>
+
+//                         <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+//                             <ListCard
+//                                 bullets={strengths}
+//                                 description="The strongest themes in the document are alignment, flexibility, and relevance to workforce-oriented two-year programs."
+//                                 icon={ShieldCheck}
+//                                 title="What the tool does well"
+//                             />
+
+//                             <div className="grid gap-4">
+//                                 <ListCard
+//                                     bullets={constraints}
+//                                     className="border-amber-500/25"
+//                                     description="The main tradeoff is time: some outputs stretch students beyond what has already been covered in course notes or textbooks."
+//                                     icon={TriangleAlert}
+//                                     title="What educators still need to manage"
+//                                 />
+
+//                                 <Card className="border-border/70 bg-background/90 shadow-sm backdrop-blur">
+//                                     <CardHeader>
+//                                         <CardTitle>Common questions from the write-up</CardTitle>
+//                                         <CardDescription className="text-sm leading-6 text-foreground/75">
+//                                             Replaced the generic FAQ placeholder with answers
+//                                             supported by the source document.
+//                                         </CardDescription>
+//                                     </CardHeader>
+//                                     <CardContent className="space-y-3">
+//                                         {faqItems.map(({ answer, question }) => (
+//                                             <div
+//                                                 className="rounded-2xl border border-border/70 bg-muted/25 p-5"
+//                                                 key={question}
+//                                             >
+//                                                 <p className="font-medium">{question}</p>
+//                                                 <p className="mt-2 text-sm leading-6 text-foreground/75">
+//                                                     {answer}
+//                                                 </p>
+//                                             </div>
+//                                         ))}
+//                                     </CardContent>
+//                                 </Card>
+//                             </div>
+//                         </div>
+//                     </SectionFrame>

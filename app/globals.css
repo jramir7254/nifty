@@ -7,7 +7,7 @@
 @import '@neondatabase/neon-js/ui/tailwind';
 
 
-/* @plugin '@tailwindcss/typography'; */
+@plugin '@tailwindcss/typography';
 
 @custom-variant dark (&:is(.dark *));
 
