@@ -154,6 +154,9 @@ function getViewport(map: maptilersdk.Map): MapViewport {
     };
 }
 
+/**
+ * @see https://www.mapcn.dev/
+ */
 const Map = forwardRef<MapRef, MapProps>(function Map(
     {
         children,
@@ -931,11 +934,13 @@ function MapPopup({
     const popup = useMemo(() => {
         const popupInstance = new maptilersdk.Popup({
             offset: 16,
+            className: 'map-popup',
             ...popupOptions,
             closeButton: false,
         })
             .setMaxWidth("none")
-            .setLngLat([longitude, latitude]);
+            .setLngLat([longitude, latitude])
+
 
         return popupInstance;
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -949,6 +954,7 @@ function MapPopup({
         popup.on("close", onCloseProp);
 
         popup.setDOMContent(container);
+        popup.toggleClassName('maplibregl-popup-content')
         popup.addTo(map);
 
         return () => {
@@ -986,7 +992,7 @@ function MapPopup({
     return createPortal(
         <div
             className={cn(
-                "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+                "relative rounded-md border  bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
                 className
             )}
         >

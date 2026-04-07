@@ -1,7 +1,8 @@
-import { ConfigPanel } from "./_components";
 import { Suspense } from "react";
-import { MarkersLayer } from "./_components/map";
-import { Map } from "@/components/ui/tiler";
+import { MarkersLayer } from "./_components/globe/markers-layer";
+import { Map } from "@/components/mapcn/tiler";
+import { BoundaryLayer } from "./_components/globe/boundary-layer";
+import { ConfigPanel } from "./_components/config/config-panel";
 
 export default function GlobePage() {
     return (
@@ -11,7 +12,6 @@ export default function GlobePage() {
                     <ConfigPanel />
                 </div>
                 <Map
-                    // projection={{ type: 'globe' }}
                     projection='globe'
                     zoom={2}
                     minZoom={2}
@@ -19,6 +19,7 @@ export default function GlobePage() {
                         dark: 'https://api.maptiler.com/maps/dataviz-dark/style.json?key=WoHVoOaowll2UAl1a0g4'
                     }}
                 >
+                    <BoundaryLayer />
                     <MarkersLayer />
                 </Map>
             </div>

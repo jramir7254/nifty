@@ -3,8 +3,8 @@
 import { Button } from '@/components/shadcn/button'
 import { Shuffle } from 'lucide-react'
 import React from 'react'
-import { useGeoStore } from '../_lib/geo_store'
-import zipGeoData from "../_lib/zipcodes.json"
+import { useGeoStore } from '../../_lib/geo_store'
+import zipGeoData from "../../_lib/zipcodes.json"
 import { useSearch } from '@/hooks/use-search'
 
 

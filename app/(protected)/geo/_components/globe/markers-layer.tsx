@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState, useId, useRef, useCallback } from "react";
-import { Map, MapPopup, useMap } from "@/components/ui/tiler";
-// import { Map, MapPopup, useMap } from "@/components/ui/map";
-import { useGeoStore } from "../_lib/geo_store";
+import { MapPopup, useMap } from "@/components/mapcn/tiler";
+import { useGeoStore } from "../../_lib/geo_store";
 
 
 
 interface SelectedPoint {
     id: number;
+    address: string
     name: string;
     category: string;
     coordinates: [number, number];
@@ -20,6 +20,8 @@ import type {
     GeoJsonProperties,
     Point,
 } from 'geojson';
+import { Toggle } from "@/components/shadcn/toggle";
+import { BookmarkIcon } from "lucide-react";
 
 
 type RandomLocationFeature = Feature<Point, GeoJsonProperties>;
@@ -43,6 +45,8 @@ export function MarkersLayer() {
         latestRandomLocationsRef.current = randomLocations;
     }, [randomLocations]);
 
+
+
     const addLayers = useCallback(() => {
         if (!map) return;
         // Add source if it doesn't exist
@@ -65,7 +69,7 @@ export function MarkersLayer() {
                 paint: {
                     "circle-radius": 6,
                     "circle-color": "#3b82f6",
-                    "circle-stroke-width": 2,
+                    "circle-stroke-width": 1,
                     "circle-stroke-color": "#ffffff",
                     // add more paint properties here to customize the appearance of the markers
                 },
@@ -75,7 +79,6 @@ export function MarkersLayer() {
 
     }, [map, sourceId, layerId, randomLocations]);
 
-    //maptilersdk.MapStyle.DATAVIZ.DARK.getExpandedStyleURL(),
 
     useEffect(() => {
         if (!map || !isLoaded) return;
@@ -97,6 +100,7 @@ export function MarkersLayer() {
 
             setSelectedPoint({
                 id: feature.properties?.id,
+                address: feature.properties?.address_line2,
                 name: feature.properties?.name,
                 category: feature.properties?.category,
                 coordinates: coords,
@@ -133,6 +137,7 @@ export function MarkersLayer() {
         <>
             {selectedPoint && (
                 <MapPopup
+                    className=""
                     longitude={selectedPoint.coordinates[0]}
                     latitude={selectedPoint.coordinates[1]}
                     onClose={() => setSelectedPoint(null)}
@@ -141,10 +146,14 @@ export function MarkersLayer() {
                     offset={10}
                     closeButton
                 >
-                    <div className="min-w-35">
+                    <div className=" min-w-35 h-20">
+                        <Toggle aria-label="Toggle bookmark" size="sm" variant="outline">
+                            <BookmarkIcon className="group-data-[state=on]/toggle:fill-foreground" />
+                            Bookmark
+                        </Toggle>
                         <p className="font-medium">{selectedPoint.name}</p>
                         <p className="text-sm text-muted-foreground">
-                            {selectedPoint.category}
+                            {selectedPoint?.address}
                         </p>
                     </div>
                 </MapPopup>

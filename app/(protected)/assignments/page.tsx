@@ -5,6 +5,7 @@ import { auth } from '@/lib/auth/server'
 import { getAssignmentTitle, getPlainText } from '@/lib/assignment-title'
 import { Button } from '@/components/shadcn/button'
 import AssignmentCard, { type AssignmentGalleryItem } from './_components/assignment-card'
+import { ScrollArea } from '@/components/shadcn/scroll-area'
 
 type AssignmentParams = {
     additionalContext?: string
@@ -83,7 +84,7 @@ export default async function AssignmentsPage() {
     const assignments = [...rows].reverse().map(buildGalleryItem)
 
     return (
-        <div className="relative size-full overflow-y-auto">
+        <ScrollArea className="relative size-full h-[90vh]">
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="bg-primary/6 absolute top-0 left-0 size-72 rounded-full blur-3xl" />
                 <div className="bg-highlight/30 absolute top-24 right-0 size-96 rounded-full blur-3xl" />
@@ -144,6 +145,6 @@ export default async function AssignmentsPage() {
                     </section>
                 )}
             </div>
-        </div>
+        </ScrollArea>
     )
 }

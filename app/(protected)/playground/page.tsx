@@ -44,6 +44,7 @@ import TopicSelect from './_components/topic-select'
 import { useParamsStore } from './_lib/params-store'
 import { useGeoStore } from '../geo/_lib/geo_store'
 import { ScrollArea } from '@/components/shadcn/scroll-area'
+import BloomSliders from './_components/params/blooms-sliders'
 
 type LocationFeature = {
     properties?: {
@@ -51,12 +52,6 @@ type LocationFeature = {
     }
 }
 
-type SummaryCardProps = {
-    description: string
-    icon: React.ComponentType<{ className?: string }>
-    label: string
-    value: string
-}
 
 function getLocationName(location: unknown) {
     if (!location || typeof location !== 'object') {
@@ -66,22 +61,6 @@ function getLocationName(location: unknown) {
     return ((location as LocationFeature).properties?.name ?? null)
 }
 
-function SummaryCard({ description, icon: Icon, label, value }: SummaryCardProps) {
-    return (
-        <Card size="sm">
-            <CardHeader className="gap-3">
-                <div className="text-muted-foreground flex items-center gap-2 text-xs tracking-[0.24em] uppercase">
-                    <Icon className="size-4" />
-                    <span>{label}</span>
-                </div>
-                <div className="flex flex-col gap-1">
-                    <CardTitle>{value}</CardTitle>
-                    <CardDescription>{description}</CardDescription>
-                </div>
-            </CardHeader>
-        </Card>
-    )
-}
 
 export default function AssignmentPage() {
     const {
@@ -91,6 +70,7 @@ export default function AssignmentPage() {
         generatedAssignemnt,
         includeStarterCode,
         programmingLanguage,
+        blooms,
         setParameter,
         topic,
     } = useParamsStore((state) => state)
@@ -109,6 +89,7 @@ export default function AssignmentPage() {
         setCompletion,
         setInput,
         stop,
+
     } = useCompletion({
         api: '/api/gen-ai/gemini',
         body: {
@@ -117,7 +98,12 @@ export default function AssignmentPage() {
             includeStarterCode,
             programmingLanguage,
             randomLocations,
+            blooms,
             topic,
+        },
+        onFinish(prompt, completion) {
+            console.log('finished completion', { prompt, completion })
+            handleSave()
         },
         experimental_throttle: 800,
     })
@@ -147,47 +133,7 @@ export default function AssignmentPage() {
             .slice(0, 4)
     }, [randomLocations])
 
-    const summaryCards = React.useMemo(
-        () => [
-            {
-                description: courseLevel
-                    ? 'Sets the difficulty and topic list.'
-                    : 'Choose a course to unlock topics.',
-                icon: BookOpenIcon,
-                label: 'Course',
-                value: courseLevel || 'Choose a course',
-            },
-            {
-                description: programmingLanguage
-                    ? 'Used for examples and starter scaffolding.'
-                    : 'Select the target implementation language.',
-                icon: Code2Icon,
-                label: 'Language',
-                value: programmingLanguage || 'Language needed',
-            },
-            {
-                description: topic
-                    ? 'Keeps the brief focused on one concept.'
-                    : 'Pick a topic after selecting a course.',
-                icon: FileTextIcon,
-                label: 'Topic',
-                value: topic || 'Topic needed',
-            },
-            {
-                description:
-                    randomLocations.length > 0
-                        ? 'Pulled in from the geo workspace.'
-                        : 'Add map context if the assignment needs real places.',
-                icon: MapPinIcon,
-                label: 'Locations',
-                value:
-                    randomLocations.length > 0
-                        ? `${randomLocations.length} attached`
-                        : 'No geo context',
-            },
-        ],
-        [courseLevel, programmingLanguage, randomLocations.length, topic]
-    )
+
 
     const handleReset = () => {
         clearParameters()
@@ -198,9 +144,7 @@ export default function AssignmentPage() {
     }
 
     const handleSave = () => {
-        if (!hasDraft || isSaving) {
-            return
-        }
+
 
         startSavingTransition(async () => {
             await saveAssignmentAction({
@@ -212,6 +156,7 @@ export default function AssignmentPage() {
                     programmingLanguage,
                     randomLocations,
                     topic,
+                    blooms
                 },
             })
 
@@ -220,54 +165,43 @@ export default function AssignmentPage() {
     }
 
     return (
-        <ScrollArea className="relative size-full h-[90vh] overflow-y-auto">
-            <div className="pointer-events-none absolute inset-0 overflow-hidden">
-                <div className="bg-primary/6 absolute top-0 left-0 size-72 rounded-full blur-3xl" />
-                <div className="bg-highlight/30 absolute top-24 right-0 size-80 rounded-full blur-3xl" />
-            </div>
+        <div className=" size-full max-h-full overflow-hidden">
 
-            <div className="relative mx-auto flex max-w-[1600px] flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-                <section className="flex flex-col gap-4">
-                    <p className="text-muted-foreground text-xs tracking-[0.32em] uppercase">
-                        Assignment Studio
-                    </p>
 
-                    <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
-                        <div className="max-w-3xl">
-                            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-                                Clean assignment drafting instead of a scratchpad.
-                            </h1>
-                            <p className="text-muted-foreground mt-3 max-w-2xl text-sm sm:text-base">
-                                Build a stronger prompt, attach geo context, and save the
-                                rendered assignment from the live preview without the old
-                                manual sync step.
-                            </p>
-                        </div>
+            <div className="relative  flex  flex-col gap-6 ">
 
-                        <div className="flex flex-wrap gap-3">
-                            <Button onClick={handleReset} type="button" variant="outline">
-                                <RotateCcwIcon data-icon="inline-start" />
-                                Reset setup
-                            </Button>
-                            <Button
-                                disabled={!hasDraft || isSaving}
-                                onClick={handleSave}
-                                type="button"
-                            >
-                                {isSaving ? (
-                                    <LoaderCircleIcon
-                                        className="animate-spin"
-                                        data-icon="inline-start"
-                                    />
-                                ) : (
-                                    <SaveIcon data-icon="inline-start" />
-                                )}
-                                {isSaving ? 'Saving draft...' : 'Save draft'}
-                            </Button>
-                        </div>
-                    </div>
+                <div className="relative grid xl:grid-cols-[minmax(380px,400px)_minmax(0,1fr)]">
 
-                    <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
+                    <ScrollArea className="relative flex flex-col h-[90vh] gap-6   xl:self-start lg:border-r">
+                        <header className="sticky bg-background z-10 top-0 flex justify-end px-5 py-2 gap-4 border-b">
+
+
+                            <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+
+                                <div className="flex flex-wrap gap-3">
+                                    <Button onClick={handleReset} type="button" variant="outline">
+                                        <RotateCcwIcon data-icon="inline-start" />
+                                        Reset setup
+                                    </Button>
+                                    {/* <Button
+                                        disabled={!hasDraft || isSaving}
+                                        onClick={handleSave}
+                                        type="button"
+                                    >
+                                        {isSaving ? (
+                                            <LoaderCircleIcon
+                                                className="animate-spin"
+                                                data-icon="inline-start"
+                                            />
+                                        ) : (
+                                            <SaveIcon data-icon="inline-start" />
+                                        )}
+                                        {isSaving ? 'Saving draft...' : 'Save draft'}
+                                    </Button> */}
+                                </div>
+                            </div>
+
+                            {/* <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
                         <span>
                             {hasDraft
                                 ? 'Preview content is synced and ready to save.'
@@ -279,12 +213,10 @@ export default function AssignmentPage() {
                                 <span>Last saved at {savedAtLabel}</span>
                             </>
                         ) : null}
-                    </div>
-                </section>
+                    </div> */}
+                        </header>
 
-                <div className="grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
-                    <div className="flex flex-col gap-6 xl:sticky xl:top-6 xl:self-start">
-                        <Card>
+                        <Card className='bg-background rounded-none'>
                             <CardHeader>
                                 <CardTitle>Prompt</CardTitle>
                                 <CardDescription>
@@ -335,22 +267,17 @@ export default function AssignmentPage() {
                                     </div>
                                 </form>
                             </CardContent>
-                            <CardFooter>
-                                <p className="text-muted-foreground text-sm">
-                                    Generate is enabled after the prompt, course, topic, and
-                                    language are set.
-                                </p>
-                            </CardFooter>
+
                         </Card>
 
-                        <Card>
+                        <Card className='bg-background rounded-none'>
                             <CardHeader>
                                 <CardTitle>Configuration</CardTitle>
                                 <CardDescription>
                                     Shape the assignment before it reaches the model.
                                 </CardDescription>
                             </CardHeader>
-                            <CardContent>
+                            <CardContent className='space-y-5'>
                                 <FieldGroup>
                                     <Field>
                                         <FieldLabel htmlFor="course-level">
@@ -413,10 +340,11 @@ export default function AssignmentPage() {
                                         />
                                     </Field>
                                 </FieldGroup>
+                                <BloomSliders />
                             </CardContent>
                         </Card>
 
-                        <Card>
+                        <Card className='bg-background rounded-none'>
                             <CardHeader>
                                 <CardTitle>Geo Context</CardTitle>
                                 <CardDescription>
@@ -465,30 +393,20 @@ export default function AssignmentPage() {
                                 )}
                             </CardContent>
                         </Card>
-                    </div>
+                    </ScrollArea>
 
-                    <div className="flex min-w-0 flex-col gap-6">
-                        <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
-                            {summaryCards.map((card) => (
-                                <SummaryCard
-                                    description={card.description}
-                                    icon={card.icon}
-                                    key={card.label}
-                                    label={card.label}
-                                    value={card.value}
-                                />
-                            ))}
-                        </div>
 
-                        <Card className="min-h-[720px]">
-                            <CardHeader>
+                    <div className="flex min-w-0 min-h-full  flex-col gap-6">
+
+                        <Card className="flex bg-background min-h-full  rounded-none ">
+                            {/* <CardHeader>
                                 <CardTitle>Live Preview</CardTitle>
                                 <CardDescription>
                                     Streamed markdown is rendered below and kept in sync with the
                                     draft that gets saved.
                                 </CardDescription>
-                            </CardHeader>
-                            <CardContent>
+                            </CardHeader> */}
+                            <CardContent className='bg-background h-full'>
                                 <AssignmentStaticEditor
                                     completion={completion}
                                     isLoading={isLoading}
@@ -498,6 +416,6 @@ export default function AssignmentPage() {
                     </div>
                 </div>
             </div>
-        </ScrollArea>
+        </div>
     )
 }

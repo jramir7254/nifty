@@ -1,4 +1,4 @@
-import { pgTable, foreignKey, uuid, jsonb, text } from "drizzle-orm/pg-core"
+import { pgTable, foreignKey, uuid, jsonb, text, timestamp } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
 
@@ -10,6 +10,7 @@ export const assignments = pgTable("assignments", {
 	params: jsonb().notNull(),
 	genMetadata: text("gen_metadata").default('{}').notNull(),
 	name: text(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow(),
 }, (table) => [
 	foreignKey({
 			columns: [table.createdBy],

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowUpRight, Sparkles } from 'lucide-react'
+import { ArrowUpRight, Sparkles, User2 } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
 import ThemeSwitcher from '@/components/navigation/theme-switcher'
@@ -66,10 +66,10 @@ export default function PublicLayout({
 
                     <div className="flex shrink-0 items-center gap-2">
                         {data ? (
-                            <Button asChild className="rounded-full px-4" size="sm">
+                            <Button asChild className=" px-4" size="sm">
                                 <Link href="/account">
                                     Profile
-                                    <ArrowUpRight data-icon="inline-end" />
+                                    <User2 data-icon="inline-end" />
                                 </Link>
                             </Button>
                         ) : (

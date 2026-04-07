@@ -43,7 +43,7 @@ export default async function AssignmentView({
             <EditorStatic
                 editor={editor}
 
-                className="pb-30"
+                className="max-w-none overflow-hidden pb-30" variant="default"
             />
         </ScrollArea>
     );

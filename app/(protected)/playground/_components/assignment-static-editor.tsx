@@ -62,7 +62,7 @@ export default function AssignmentStaticEditor({
     const hasContent = editor.children.length > 0;
 
     return (
-        <ScrollArea className="h-[68vh] min-h-[34rem]">
+        <ScrollArea className="h-[85vh]  min-h-[34rem]">
             <Plate
                 editor={editor}
                 onChange={({ value }) => {
@@ -88,7 +88,7 @@ export default function AssignmentStaticEditor({
                     </div>
                 </FixedToolbar>
 
-                <EditorContainer className="max-w-none overflow-hidden" variant="demo">
+                <EditorContainer className="max-w-none overflow-hidden" variant="default">
                     <Editor
                         className="wrap-anywhere text-wrap"
                         placeholder="Generated assignment content will appear here."

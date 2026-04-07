@@ -14,6 +14,7 @@ const languages = [
     'Python',
     'C++',
     'JavaScript',
+    'Typescript',
 ]
 
 export default function LanguageSelect({

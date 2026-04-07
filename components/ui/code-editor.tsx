@@ -4,7 +4,7 @@ import { Check, Copy } from "lucide-react"
 import { type UseInViewOptions, useInView } from "motion/react"
 import { useTheme } from "next-themes"
 import * as React from "react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/shadcn/button"
 import { cn } from "@/lib/utils"
 
 interface CopyButtonProps {

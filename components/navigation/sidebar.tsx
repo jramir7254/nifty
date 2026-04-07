@@ -73,12 +73,12 @@ const navSections: NavSection[] = [
     {
         label: "Account",
         items: [
-            {
-                title: "Dashboard",
-                href: "/account",
-                icon: LayoutDashboard,
-                requireAuth: true,
-            },
+            // {
+            //     title: "Dashboard",
+            //     href: "/account",
+            //     icon: LayoutDashboard,
+            //     requireAuth: true,
+            // },
             {
                 title: "Settings",
                 href: "/account/settings",
@@ -124,13 +124,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <SidebarMenuItem >
                         <SidebarMenuButton
                             asChild
-                            className="h-auto min-h-14 items-start rounded-xl"
+                            className="h-auto min-h-14 items-start rounded-md"
                             size="sm"
                         >
                             <Link href="/">
-                                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-9 items-center justify-center rounded-xl">
-                                    <Sparkles />
-                                </div>
+
                                 <div className="grid flex-1 text-left leading-tight">
                                     <span className="truncate font-semibold">Nifty</span>
                                     <span className="truncate text-xs text-sidebar-foreground/70">

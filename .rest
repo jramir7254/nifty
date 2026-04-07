@@ -10,4 +10,13 @@ content-type: application/json
 }
 
 ###
-GET  https://api.geoapify.com/v2/places?categories=commercial&filter=place:51227a6bc335985ac0598d30d56477c83f40f00101f901ffbc010000000000c0020792030f37393932352b75732b706172656e74&limit=50&apiKey=89459d6cc6a847e3955249115e548dfc
+GET  https://api.geoapify.com/v2/places?categories=commercial&filter=place:512e5338279b975ac0591a10c6f429ce3f40c0020792031137393932352b75732b696d706f72746564&limit=50&apiKey=89459d6cc6a847e3955249115e548dfc
+
+###
+POST http://localhost:3000/api/test
+Origin: "localhost"
+content-type: application/json
+
+POST http://localhost:3000/api/test
+Origin: "localhost"
+content-type: application/json

@@ -1,29 +1,27 @@
-import zipGeoData from "../_lib/zipcodes.json"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/shadcn/select'
 import { useSearch } from '@/hooks/use-search';
 import { cn } from '@/lib/utils';
 
-export default function ZipSelect({
-    className,
-}: {
-    className?: string
-}) {
-    const { currentSearch, handleSearchChange } = useSearch('zipcode')
+const countries = [
+    { name: 'United States', code: 'us' },
+    { name: 'Mexico', code: 'mx' },
+    { name: 'France', code: 'fr' },
+]
 
-
-    const zipcodes = Object.keys(zipGeoData)
+export default function CountrySelect() {
+    const { currentSearch, handleSearchChange } = useSearch('country')
 
     return (
         <Select
             value={currentSearch || undefined}
             onValueChange={handleSearchChange}
         >
-            <SelectTrigger className={cn("w-full", className)}>
-                <SelectValue placeholder="Select ZIP code" />
+            <SelectTrigger className={cn("w-full",)}>
+                <SelectValue placeholder="Select a country" />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    {zipcodes.map(zipcode => <SelectItem key={zipcode} value={zipcode}>{zipcode}</SelectItem>)}
+                    {countries.map(({ name, code }) => <SelectItem key={code} value={code}>{name}</SelectItem>)}
                 </SelectGroup>
             </SelectContent>
         </Select>

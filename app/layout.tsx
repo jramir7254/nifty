@@ -2,11 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Nunito } from "next/font/google";
 import "./globals.css";
 
-import { ThemeProvider } from "@/context/theme-provider";
-import { NeonAuthUIProvider } from "@neondatabase/auth/react";
-import { authClient } from "@/lib/auth/client";
-import { logger } from "@/lib/logger";
-import { Separator } from "@/components/shadcn/separator";
+import AppProviders from "@/providers";
+
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -39,30 +36,11 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} ${nunito.variable} antialiased overflow-x-hidden`}
             >
-                <NeonAuthUIProvider
-                    authClient={authClient}
-                    emailOTP
-                    emailVerification
-                    credentials={{ confirmPassword: true, }}
-                    social={{
-                        providers: ['google', 'github', 'vercel',]
-                    }}
-                    redirectTo="/account"
-                >
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="system"
-                        enableSystem
-                        disableTransitionOnChange
-                    >
-
-
-                        <main className="flex flex-1 max-w-screen flex-col gap-4 p-0 pt-0 overflow-x-hidden">
-                            {children}
-                        </main>
-
-                    </ThemeProvider>
-                </NeonAuthUIProvider>
+                <AppProviders>
+                    <main className="flex flex-1 max-w-screen flex-col gap-4 p-0 pt-0 overflow-x-hidden">
+                        {children}
+                    </main>
+                </AppProviders>
             </body>
         </html >
     );

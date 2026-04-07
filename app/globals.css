@@ -21,6 +21,15 @@
 
 }
 
+
+.maplibregl-popup-content {
+    background-color: transparent !important;
+}
+
+.maplibregl-popup-tip {
+    display: none;
+}
+
 .bd {
     border: 2px solid red;
 }

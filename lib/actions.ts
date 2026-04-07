@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation'
 
 
 export async function saveAssignmentAction(meta: any) {
-    console.info('trying to save')
+    console.info('trying to save', { meta })
 
     try {
         const { data, error } = await auth.getSession()

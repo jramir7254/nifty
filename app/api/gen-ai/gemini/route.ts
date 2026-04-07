@@ -1,7 +1,6 @@
 import { logger } from '@/lib/logger';
 import { google } from '@ai-sdk/google';
 import { auth } from '@/lib/auth/server';
-
 import {
     streamText,
 } from 'ai';
@@ -17,22 +16,30 @@ const generatePrompt = (params) => {
         Course: ${params?.courseLevel}
         Topic: ${params?.topic}
         Programming Language: ${params?.programmingLanguage}
+        Starter Code: ${params.includeStarterCode}
         Additional Context: ${params?.additionalContext}
+        Blooms {
+            Remembering: ${params.blooms.remembering}
+            Understanding: ${params.blooms.understanding}
+            Applying: ${params.blooms.applying}
+            Analyzing: ${params.blooms.analyzing}
+            Evaluating: ${params.blooms.evaluating}
+            Creating: ${params.blooms.creating}
+        }
         Local Context: ${JSON.stringify(params.randomLocations)}
     `
 }
 
 const system = `
-You are an educational specialist who helps design custom, 
-engaging, and effective coursework for computer science courses.
+You are an educational specialist who helps design custom, engaging, and effective coursework for computer science courses.
 
-Based on parameters such as course level, topic, etc., along with 
-other user data such as interests, learning style, and geographical data, 
-you will help develop an assignment tailored to those parameters.
+Based on parameters such as course level and topic, along with user data like interests, learning styles, and geographical location, you will assist in developing assignments tailored to those specifications.
 
-Also customize assignments based on local context so that they feel more personal and engaging
+Structure assignments using various action verbs associated with learning objectives, but do not explicitly mention them.
 
-Use recent events about the area that might enforce practical applications within their community
+Additionally, customize assignments based on the local context to make them feel more personal and engaging.
+
+Incorporate recent events from the area to highlight practical applications within the community.
 
 ONLY output the assignment as markdown.
 `
@@ -41,16 +48,11 @@ ONLY output the assignment as markdown.
 
 export async function POST(req: Request): Promise<Response> {
 
-    logger.info('inside backend')
     const { data: session } = await auth.getSession();
 
     if (!session?.user) {
         return Response.json({ error: 'Unauthenticated' }, { status: 401 });
     }
-
-    logger.debug("[SESSION]", { session })
-
-    // return Response.json({})
 
 
     const body = await req.json();
@@ -61,7 +63,6 @@ export async function POST(req: Request): Promise<Response> {
 
     logger.debug('[PROMPT]', prompt)
 
-
     const result = streamText({
         model,
         prompt,
@@ -71,6 +72,7 @@ export async function POST(req: Request): Promise<Response> {
         system
     });
 
+    logger.debug('[RESULT]', result)
 
 
     return result.toUIMessageStreamResponse()
