@@ -85,7 +85,7 @@ export function ConfigPanel() {
                                     <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                         ZIP
                                     </p>
-                                    <p className="mt-2 text-sm font-medium">{currentSearch}</p>
+                                    <p className="mt-2 text-sm font-medium">{currentSearch || 'None selected'}</p>
                                 </div>
                                 <div className="rounded-xl border border-border/70 bg-muted/25 p-3">
                                     <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">

@@ -10,7 +10,10 @@ export default function SubmitButton() {
     const zip = useGeoStore((state) => state.selectedZip)
 
     return (
-        <Button disabled={isPending} onClick={() => mutate({ zipcodeId: zip?.features[0]?.properties?.place_id })}>
+        <Button
+            disabled={isPending || !zip}
+            onClick={() => mutate({ zipcodeId: zip?.features[0]?.properties?.place_id })}
+        >
             {isPending ? <Spinner /> : <MapPinIcon data-icon="inline-start" />}
             Generate
         </Button>)
